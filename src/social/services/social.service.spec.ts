@@ -94,18 +94,20 @@ describe('SocialService', () => {
         id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
       }),
     );
-    jest.spyOn(service, 'whatsPost').mockImplementation(() => Promise.resolve({
-      twitter: {
-        data: {
-          id: '1786581556854714590',
-          text: 'New tuite',
+    jest.spyOn(service, 'whatsPost').mockImplementation(() =>
+      Promise.resolve({
+        twitter: {
+          data: {
+            id: '1786581556854714590',
+            text: 'New tuite',
+          },
         },
-      },
-      bsky: {
-        uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
-        cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
-      },
-    }));
+        bsky: {
+          uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
+          cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+        },
+      }),
+    );
 
     const mockMessage = 'New tuite';
     const mockFrom = '5511444412345';
@@ -123,7 +125,6 @@ describe('SocialService', () => {
     });
     expect(service.whatsPost).toHaveBeenCalledWith(mockData);
   });
-
 
   it('should create a new post via endpoint', async () => {
     jest.spyOn(mockTwitterService, 'post').mockImplementation(() =>

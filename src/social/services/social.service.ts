@@ -63,12 +63,14 @@ export class SocialService {
       from: data.from,
       message: 'Processing your posts',
       phoneNumberId: data.phoneNumberId,
-    })
+    });
 
     this.whatsPost(data);
-  }
+  };
 
-  webPost = async (message: string): Promise<{
+  webPost = async (
+    message: string,
+  ): Promise<{
     twitter: {
       data: {
         id: string;

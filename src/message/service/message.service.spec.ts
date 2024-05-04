@@ -4,7 +4,7 @@ import { SocialService } from '../../social/services/social.service';
 
 describe('MessageService', () => {
   let service: MessageService;
-  let mockSocialService: SocialService
+  let mockSocialService: SocialService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,9 +23,11 @@ describe('MessageService', () => {
     mockSocialService = module.get<SocialService>(SocialService);
   });
 
-  it('should reply message', async() => {
-    jest.spyOn(mockSocialService, 'reply').mockImplementation(() => Promise.resolve(void 0));
-    
+  it('should reply message', async () => {
+    jest
+      .spyOn(mockSocialService, 'reply')
+      .mockImplementation(() => Promise.resolve(void 0));
+
     const mockMessage = 'New tuite';
     const mockFrom = '5511444412345';
     const mockPhoneNumberId = '5511432112345';

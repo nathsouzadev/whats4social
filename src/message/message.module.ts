@@ -8,6 +8,12 @@ import { SocialService } from '../social/services/social.service';
 
 @Module({
   controllers: [MessageController],
-  providers: [MessageService, SocialService, TwitterService, BSkyService, MetaService],
+  providers: [
+    MessageService,
+    SocialService,
+    TwitterService,
+    BSkyService,
+    MetaService,
+  ],
 })
 export class MessageModule {}
