@@ -31,13 +31,11 @@ export class MessageController {
 
       // send a reply message as per the docs here https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
       try {
-        const response = await this.messageService.reply({
+        await this.messageService.reply({
           from: message.from,
           message: message.text.body,
           phoneNumberId: business_phone_number_id,
         });
-
-        console.log(response);
       } catch (error) {
         console.log(error.message);
       }

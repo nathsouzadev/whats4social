@@ -42,18 +42,18 @@ describe('SocialService', () => {
   });
 
   it('should create a new post via whatsapp', async () => {
-    jest.spyOn(mockTwitterService, 'post').mockImplementation(() =>
+    jest.spyOn(service, 'webPost').mockImplementation(() =>
       Promise.resolve({
-        data: {
-          id: '1786581556854714590',
-          text: 'New tuite',
+        twitter: {
+          data: {
+            id: '1786581556854714590',
+            text: 'New tuite',
+          },
         },
-      }),
-    );
-    jest.spyOn(mockBSkyService, 'post').mockImplementation(() =>
-      Promise.resolve({
-        uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
-        cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+        bsky: {
+          uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
+          cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+        },
       }),
     );
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
@@ -71,18 +71,13 @@ describe('SocialService', () => {
       phoneNumberId: mockPhoneNumberId,
     };
     const response = await service.whatsPost(mockData);
-    expect(mockTwitterService.post).toBeCalledWith('New tuite');
-    expect(mockBSkyService.post).toBeCalledWith('New tuite');
+    expect(service.webPost).toBeCalledWith(mockMessage);
     expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
     expect(response).toMatchObject({
       twitter: {
-        data: {
-          id: '1786581556854714590',
-          text: 'New tuite',
-        },
+        id: '1786581556854714590',
       },
       bsky: {
-        uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
         cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
       },
     });
@@ -97,13 +92,9 @@ describe('SocialService', () => {
     jest.spyOn(service, 'whatsPost').mockImplementation(() =>
       Promise.resolve({
         twitter: {
-          data: {
-            id: '1786581556854714590',
-            text: 'New tuite',
-          },
+          id: '1786581556854714590',
         },
         bsky: {
-          uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
           cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
         },
       }),

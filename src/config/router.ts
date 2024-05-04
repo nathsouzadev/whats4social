@@ -1,4 +1,4 @@
-import { HealthModule } from 'src/health/health.module';
+import { HealthModule } from '../health/health.module';
 import { MessageModule } from '../message/message.module';
 import { SocialModule } from '../social/social.module';
 
