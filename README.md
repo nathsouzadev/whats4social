@@ -8,7 +8,7 @@ Post on social media sending message with Whatsapp
 
 ## Getting started
 
-1 - Provide .env with api keys and secrets from your account to use WhatsApp Business API, Twitter API and BlueSky API.
+1 - Provide .env with api keys and secrets as exemplified by the .env.example file from your account to use WhatsApp Business API, Twitter API and BlueSky API.
 
 ## Installation
 
