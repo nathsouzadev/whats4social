@@ -38,7 +38,7 @@ export class MetaService {
     }
   };
 
-  health = async () => {
+  health = async (): Promise<void> => {
     try {
       const response = await axios({
         method: 'GET',

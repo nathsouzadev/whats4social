@@ -23,48 +23,24 @@ export class HealthController {
   @HealthCheck()
   async health() {
     return this.healtCheckService.check([
-      () => this.checkTwitter(),
-      () => this.checkBSky(),
-      () => this.checkMeta(),
+      () => this.checkStatus('twitterClient', this.twitterService.health()),
+      () => this.checkStatus('bskyClient', this.bskyService.health()),
+      () => this.checkStatus('metaClient', this.metaService.health()),
     ]);
   }
 
-  async checkBSky(): Promise<HealthIndicatorResult> {
+  async checkStatus(
+    service: string,
+    fn: Promise<any>,
+  ): Promise<HealthIndicatorResult> {
     try {
-      await this.bskyService.health();
+      await fn;
       return {
-        bskyClient: { status: 'up' },
-      };
-    } catch (error) {
-      console.log(error);
-      return {
-        bskyClient: { status: 'down' },
-      };
-    }
-  }
-
-  async checkTwitter(): Promise<HealthIndicatorResult> {
-    try {
-      await this.twitterService.myUser();
-      return {
-        twitterClient: { status: 'up' },
+        [service]: { status: 'up' },
       };
     } catch (error) {
       return {
-        twitterClient: { status: 'down' },
-      };
-    }
-  }
-
-  async checkMeta(): Promise<HealthIndicatorResult> {
-    try {
-      await this.metaService.health();
-      return {
-        metaClient: { status: 'up' },
-      };
-    } catch (error) {
-      return {
-        metaClient: { status: 'down' },
+        [service]: { status: 'down' },
       };
     }
   }

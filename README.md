@@ -50,10 +50,16 @@ $ yarn test:cov
 $ localhost:3000/api
 ```
 
+## Healthcheck
+
+```bash
+$ localhost:3000/api/health
+```
+
 ## Create a post to Twitter and Bluesky
 
 ```bash
-$ curl --location 'http://localhost:3005/api/social' \
+$ curl --location 'http://localhost:3000/api/social' \
 --header 'Content-Type: application/json' \
 --data '{
   "message": "My post from whats4social to Twitter and Bluesky"
@@ -67,6 +73,8 @@ $ curl --location 'http://localhost:3005/api/social' \
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+### The first post with service
 
 <img src="https://media.licdn.com/dms/image/D4D22AQGi31vzH3xE9A/feedshare-shrink_1280/0/1714823898152?e=1717632000&v=beta&t=frIGz6iD60Cll879JJht6u1CCypA3IcMZ5PkJLjdErQ" alt="Post enviado pelo Whatsapp" style="width:300px;"/>
 

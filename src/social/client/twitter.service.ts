@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TwitterClient, CreateTweet } from 'twitter-api-client';
+import {
+  TwitterClient,
+  CreateTweet,
+  AccountSettings,
+} from 'twitter-api-client';
 
 @Injectable()
 export class TwitterService {
@@ -22,5 +26,6 @@ export class TwitterService {
       text: message,
     });
 
-  myUser = async () => this.client.users.usersMe();
+  health = async (): Promise<AccountSettings> =>
+    this.client.accountsAndUsers.accountSettings();
 }

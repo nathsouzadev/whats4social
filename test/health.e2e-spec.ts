@@ -6,8 +6,8 @@ import * as nock from 'nock';
 
 jest.mock('twitter-api-client', () => ({
   TwitterClient: jest.fn().mockImplementation(() => ({
-    users: {
-      usersMe: jest.fn(),
+    accountsAndUsers: {
+      accountSettings: jest.fn(),
     },
   })),
 }));
