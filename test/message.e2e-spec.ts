@@ -5,6 +5,27 @@ import { AppModule } from '../src/app.module';
 import { randomUUID } from 'crypto';
 import * as nock from 'nock';
 import { mockMetaMessage } from './__mocks__/meta-received-data.mock';
+import { mockBskyResponse } from './__mocks__/bsky-response.mock';
+import { mockTwitterResponse } from './__mocks__/twitter-response.mock';
+
+jest.mock('twitter-api-client', () => ({
+  TwitterClient: jest.fn().mockImplementation(() => ({
+    tweetsV2: {
+      createTweet: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve(mockTwitterResponse())),
+    },
+  })),
+}));
+
+jest.mock('@atproto/api', () => ({
+  BskyAgent: jest.fn().mockImplementation(() => ({
+    login: jest.fn(),
+    post: jest
+      .fn()
+      .mockImplementation(() => Promise.resolve(mockBskyResponse())),
+  })),
+}));
 
 describe('MessageController (e2e)', () => {
   let app: INestApplication;
@@ -29,6 +50,7 @@ describe('MessageController (e2e)', () => {
         const mockCustomerPhone = '5511999991111';
         nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
           .post('')
+          .times(3)
           .reply(200, {
             messaging_product: 'whatsapp',
             contacts: [
@@ -63,13 +85,17 @@ describe('MessageController (e2e)', () => {
       process.env.WEBHOOK_VERIFY_TOKEN = mockToken;
       const mockChallenge = '1158201444';
 
+      const handleResponse = async (response: any) => {
+        expect(response.text).toBe(mockChallenge);
+      };
+
       it('should return 200 with challenge', async () => {
         return request(app.getHttpServer())
           .get(
             `/message?hub.mode=subscribe&hub.challenge=${mockChallenge}&hub.verify_token=${mockToken}`,
           )
           .expect(200)
-          .then((response) => expect(response.text).toBe(mockChallenge));
+          .then(handleResponse);
       });
 
       it('should return 401 when have invalid token', () => {

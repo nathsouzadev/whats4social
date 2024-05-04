@@ -1,0 +1,103 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Production
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ## Sets environment variable
+  PORT: 5000
+  GRAPH_API_TOKEN: 'GRAPH_API_TOKEN'
+  GRAPH_PHONE_NUMBER_ID: 'GRAPH_PHONE_NUMBER_ID'
+  WEBHOOK_VERIFY_TOKEN: 'WEB_HOOK_VERIFY_TOKEN'
+  WB_URL: 'https://api.whatsapp.com/'
+  TWITTER_API_KEY: 'TWITTER_API_KEY'
+  TWITTER_API_SECRET: 'TWITTER_API_SECRET'
+  TWITTER_ACCESS_TOKEN: 'TWITTER_ACCESS_TOKEN'
+  TWITTER_ACCESS_TOKEN_SECRET: 'TWITTER_ACCESS_TOKEN_SECRET'
+  BSKY_IDENTIFIER: 'BSKY_IDENTIFIER'
+  BSKY_PASSWORD: 'BSKY_PASSWORD'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+        # ESLint and Prettier must be in `package.json`
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run lint
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn --legacy-peer-deps
+
+      - name: Run unit tests
+        run: yarn test
+
+  integration:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn --legacy-peer-deps
+
+      - name: Running integration tests
+        run: yarn test:e2e
+
+  stage:
+    if: needs.test.result == 'success' && needs.e2e.result == 'success' && ${{ github.ref }} == 'refs/heads/main'
+    needs:
+      - test
+      - integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: JorgeLNJunior/render-deploy@v1.3.2
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          clear_cache: true
+          wait_deploy: true
