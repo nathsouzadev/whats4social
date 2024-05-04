@@ -21,4 +21,6 @@ export class TwitterService {
     await this.client.tweetsV2.createTweet({
       text: message,
     });
+
+  myUser = async () => this.client.users.usersMe();
 }

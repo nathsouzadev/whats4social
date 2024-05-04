@@ -7,6 +7,7 @@ describe('MetaService', () => {
   let service: MetaService;
   const mockUrl = 'https://graph.facebook.com/v18.0';
   const mockToken = 'token';
+  const mockPhoneNumberId = '123456789012345';
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -18,7 +19,8 @@ describe('MetaService', () => {
             get: jest
               .fn()
               .mockReturnValueOnce(mockUrl)
-              .mockReturnValueOnce(mockToken),
+              .mockReturnValueOnce(mockToken)
+              .mockReturnValueOnce(mockPhoneNumberId),
           },
         },
       ],

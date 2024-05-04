@@ -67,3 +67,9 @@ $ curl --location 'http://localhost:3005/api/social' \
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+<img src="https://media.licdn.com/dms/image/D4D22AQGi31vzH3xE9A/feedshare-shrink_1280/0/1714823898152?e=1717632000&v=beta&t=frIGz6iD60Cll879JJht6u1CCypA3IcMZ5PkJLjdErQ" alt="Post enviado pelo Whatsapp" style="width:300px;"/>
+
+<img src="https://media.licdn.com/dms/image/D4D22AQFuKih4Kh7DlA/feedshare-shrink_1280/0/1714823897943?e=1717632000&v=beta&t=mAhW-cWjAG2yd_BKL4YNtSGSIs4m6EcabRK6SgSwT-I" alt="Post publicado no Twitter" style="width:400px;"/>
+
+<img src="https://media.licdn.com/dms/image/D4D22AQHwEgVpWt-Njw/feedshare-shrink_1280/0/1714823897920?e=1717632000&v=beta&t=NJA-lv2ZbFY8Ae3isROx670_afmrhRDnaF9tyIDgVz8" alt="Post publicado no Bluesky" style="width:400px;"/>

@@ -30,4 +30,11 @@ export class BSkyService {
       createdAt: new Date().toISOString(),
     });
   };
+
+  health = async (): Promise<void> => {
+    await this.login();
+    await this.agent.getProfile({
+      actor: this.configService.get('bsky.identifier'),
+    });
+  };
 }
