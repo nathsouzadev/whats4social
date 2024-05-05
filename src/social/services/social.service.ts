@@ -90,12 +90,4 @@ export class SocialService {
 
     if(data.valid) this.whatsPost(data);
   };
-
-  health = async (): Promise<void> => {
-    await Promise.all([
-      this.twitterService.health(),
-      this.bskyService.health(),
-      this.metaService.health(),
-    ]);
-  };
 }

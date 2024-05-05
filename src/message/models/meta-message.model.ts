@@ -64,3 +64,16 @@ export interface QuickReplyReceived extends MetaMessage {
     type: string;
   }>;
 }
+
+export interface WBPayloadEntry {
+  id: string;
+  changes: Array<{
+    value: MessageReceived | UpdateStatus;
+    field: 'messages';
+  }>;
+}
+
+export interface MetaPayload {
+  object: 'whatsapp_business_account';
+  entry: WBPayloadEntry[];
+}

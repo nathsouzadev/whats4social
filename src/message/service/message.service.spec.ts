@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageService } from './message.service';
 import { SocialService } from '../../social/services/social.service';
+import { MetaPayload } from '../models/meta-message.model';
 
 describe('MessageService', () => {
   let service: MessageService;
@@ -72,7 +73,7 @@ describe('MessageService', () => {
       .spyOn(mockSocialService, 'reply')
       .mockImplementation(() => Promise.resolve(void 0));
 
-    await service.handleMessage(mockData);
+    await service.handleMessage(mockData as MetaPayload);
     expect(mockSocialService.reply).toHaveBeenCalledWith({
       from: '5511444412345',
       message: 'New tuite',
