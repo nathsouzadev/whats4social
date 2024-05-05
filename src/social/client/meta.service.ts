@@ -34,10 +34,8 @@ export class MetaService {
       });
 
       this.logger.log(`Message sent ${JSON.stringify(response.data)}`);
-      console.log('Message sent', JSON.stringify(response.data));
       return response.data.messages[0];
     } catch (error) {
-      console.log(error.message);
       this.logger.error(error.message);
       throw new InternalServerErrorException(error.message)
     }
@@ -62,13 +60,11 @@ export class MetaService {
             entity.can_send_message === 'BLOCKED')
         ) {
           this.logger.error(`Blocked ${entity.entity_type} ${entity.id}`);
-          console.log(`Blocked ${entity.entity_type} ${entity.id}`);
           throw new InternalServerErrorException(`Blocked ${entity.entity_type} ${entity.id}`);
         }
       });
     } catch (error) {
       this.logger.error(error.message);
-      console.log(error);
       throw new InternalServerErrorException(error.message);
     }
   };

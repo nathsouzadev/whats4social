@@ -33,10 +33,8 @@ export class BSkyService {
       });
       
       this.logger.log(`Post created ${JSON.stringify(response)}`);
-      console.log('Post created', JSON.stringify(response));
       return response
     } catch (error) {
-      console.log(error.message);
       this.logger.error(error.message);
       throw new InternalServerErrorException(error.message)
     }

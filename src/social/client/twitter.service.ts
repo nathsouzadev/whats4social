@@ -29,10 +29,8 @@ export class TwitterService {
       });
 
       this.logger.log(`Tweet posted ${JSON.stringify(response)}`);
-      console.log('Tweet posted', JSON.stringify(response));
       return response
     } catch (error) {
-      console.log(error.message);
       this.logger.error(error.message);
       throw new InternalServerErrorException(error.message)
     }
