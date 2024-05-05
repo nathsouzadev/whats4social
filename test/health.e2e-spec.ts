@@ -15,7 +15,7 @@ jest.mock('twitter-api-client', () => ({
 jest.mock('@atproto/api', () => ({
   BskyAgent: jest.fn().mockImplementation(() => ({
     login: jest.fn(),
-    countUnreadNotifications: jest.fn(),
+    countUnreadNotifications: jest.fn().mockImplementation(() => Promise.resolve({ data: { count: 0 } })),
   })),
 }));
 
