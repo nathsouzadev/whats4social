@@ -30,10 +30,6 @@ export class MessageController {
       body: req.body,
       time: performance.now() - t0,
     }))
-    console.log('Message received', JSON.stringify({
-      message: req.body,
-      time: performance.now() - t0,
-    }))
     return { message: 'ok' };
   }
 

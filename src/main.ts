@@ -5,7 +5,10 @@ import { HttpExceptionFilter } from './config/http-exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN,
+    methods: 'POST, GET'
+  });
 
   const document = SwaggerModule.createDocument(
     app,
