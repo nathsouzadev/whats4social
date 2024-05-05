@@ -5,18 +5,17 @@ import { InternalServerErrorException } from '@nestjs/common';
 
 const mockLogin = jest.fn();
 const mockPost = jest.fn();
-const mockGetProfile = jest.fn();
+const mockCountUnreadNotifications = jest.fn();
 jest.mock('@atproto/api', () => ({
   BskyAgent: jest.fn().mockImplementation(() => ({
     login: mockLogin,
     post: mockPost,
-    getProfile: mockGetProfile,
+    countUnreadNotifications: mockCountUnreadNotifications,
   })),
 }));
 
 describe('BSkyService', () => {
   let service: BSkyService;
-  let mockConfigService: ConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -34,7 +33,6 @@ describe('BSkyService', () => {
     }).compile();
 
     service = module.get<BSkyService>(BSkyService);
-    mockConfigService = module.get<ConfigService>(ConfigService);
   });
 
   it('should create a new post', async () => {
@@ -63,11 +61,16 @@ describe('BSkyService', () => {
   });
 
   it('should check health', async () => {
-    mockGetProfile.mockImplementation(() => Promise.resolve({}));
-    jest.spyOn(mockConfigService, 'get').mockReturnValueOnce('identifier');
+    mockCountUnreadNotifications.mockImplementation(() => Promise.resolve({
+      data: { count: 0 },
+      headers: {
+        'ratelimit-limit': '3000',
+      },
+    }));
     
-    await service.health();
+    const response = await service.health();
     expect(mockLogin).toHaveBeenCalled();
-    expect(mockGetProfile).toHaveBeenCalledWith({ actor: 'identifier' });
+    expect(mockCountUnreadNotifications).toHaveBeenCalled();
+    expect(response).toMatchObject({ count: 0 });
   });
 });
