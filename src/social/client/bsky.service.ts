@@ -40,10 +40,9 @@ export class BSkyService {
     }
   };
 
-  health = async (): Promise<void> => {
+  health = async (): Promise<{ count: number }> => {
     await this.login();
-    await this.agent.getProfile({
-      actor: this.configService.get('bsky.identifier'),
-    });
+    const response = await this.agent.countUnreadNotifications();
+    return response.data;
   };
 }
