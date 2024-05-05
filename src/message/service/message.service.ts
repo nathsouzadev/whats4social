@@ -17,7 +17,7 @@ export class MessageService {
   handleMessage = async(data: any) => {
     const message = data.entry?.[0]?.changes[0]?.value?.messages?.[0];
     
-    if(message?.type === 'text') {
+    if(message?.type === 'text' && message?.text?.body !== 'teste') {
       const business_phone_number_id =
         data.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
 
