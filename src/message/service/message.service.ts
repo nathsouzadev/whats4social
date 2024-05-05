@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SocialService } from '../../social/services/social.service';
+import { MetaPayload } from '../models/meta-message.model';
 
 @Injectable()
 export class MessageService {
@@ -14,8 +15,8 @@ export class MessageService {
     valid: boolean;
   }) => this.socialService.reply(data);
 
-  handleMessage = async(data: any) => {
-    const message = data.entry?.[0]?.changes[0]?.value?.messages?.[0];
+  handleMessage = async(data: MetaPayload) => {
+    const message = data.entry?.[0]?.changes[0]?.value?.['messages'][0];
     
     if(message?.type === 'text' && message?.text?.body !== 'teste') {
       const business_phone_number_id =

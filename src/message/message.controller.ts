@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { MessageService } from './service/message.service';
+import { MetaMessageDTO } from './dto/meta-message.dto';
 
 @Controller()
 export class MessageController {
@@ -21,13 +23,13 @@ export class MessageController {
   })
   @Post()
   @HttpCode(200)
-  async getHello(@Request() req) {
+  async getHello(@Body() messageData: MetaMessageDTO) {
     const t0 = performance.now();
     
-    await this.messageService.handleMessage(req.body);
+    await this.messageService.handleMessage(messageData);
 
     this.logger.log(JSON.stringify({
-      body: req.body,
+      body: messageData,
       time: performance.now() - t0,
     }))
     return { message: 'ok' };
