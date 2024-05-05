@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Logger,
   Post,
   Request,
   UnauthorizedException,
@@ -11,6 +12,8 @@ import { MessageService } from './service/message.service';
 
 @Controller()
 export class MessageController {
+  private readonly logger = new Logger(MessageController.name);
+  
   constructor(private readonly messageService: MessageService) {}
 
   @ApiOkResponse({
@@ -19,28 +22,18 @@ export class MessageController {
   @Post()
   @HttpCode(200)
   async getHello(@Request() req) {
-    // check if the webhook request contains a message
-    // details on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
-    const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
+    const t0 = performance.now();
+    
+    await this.messageService.handleMessage(req.body);
 
-    // check if the incoming message contains text
-    if (message?.type === 'text') {
-      // extract the business number to send the reply from it
-      const business_phone_number_id =
-        req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-
-      // send a reply message as per the docs here https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
-      try {
-        await this.messageService.reply({
-          from: message.from,
-          message: message.text.body,
-          phoneNumberId: business_phone_number_id,
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
+    this.logger.log(JSON.stringify({
+      body: req.body,
+      time: performance.now() - t0,
+    }))
+    console.log('Message received', JSON.stringify({
+      message: req.body,
+      time: performance.now() - t0,
+    }))
     return { message: 'ok' };
   }
 

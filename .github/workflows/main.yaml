@@ -12,9 +12,9 @@ env:
   ## Sets environment variable
   PORT: 5000
   GRAPH_API_TOKEN: 'GRAPH_API_TOKEN'
-  GRAPH_PHONE_NUMBER_ID: 'GRAPH_PHONE_NUMBER_ID'
+  GRAPH_PHONE_NUMBER_ID: '123456789098765'
   WEBHOOK_VERIFY_TOKEN: 'WEB_HOOK_VERIFY_TOKEN'
-  WB_URL: 'https://api.whatsapp.com/'
+  WB_URL: 'https://api.whatsapp.com/v18.0'
   TWITTER_API_KEY: 'TWITTER_API_KEY'
   TWITTER_API_SECRET: 'TWITTER_API_SECRET'
   TWITTER_ACCESS_TOKEN: 'TWITTER_ACCESS_TOKEN'
@@ -61,7 +61,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn --legacy-peer-deps
+        run: yarn --frozen-lockfile
 
       - name: Run unit tests
         run: yarn test
@@ -82,7 +82,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn --legacy-peer-deps
+        run: yarn --frozen-lockfile
 
       - name: Running integration tests
         run: yarn test:e2e

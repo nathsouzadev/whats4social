@@ -83,7 +83,7 @@ describe('SocialService', () => {
     });
   });
 
-  it('should reply to a message via whatsapp', async () => {
+  it('should reply to a message via whatsapp with process info', async () => {
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
       Promise.resolve({
         id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
@@ -107,6 +107,7 @@ describe('SocialService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      valid: true
     };
     await service.reply(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
@@ -115,6 +116,32 @@ describe('SocialService', () => {
       phoneNumberId: mockPhoneNumberId,
     });
     expect(service.whatsPost).toHaveBeenCalledWith(mockData);
+  });
+
+  it('should reply to a message via whatsapp with invalid type', async () => {
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+    jest.spyOn(service, 'whatsPost')
+
+    const mockMessage = 'New tuite';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      valid: false
+    };
+    await service.reply(mockData);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: 'Type not supported',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(service.whatsPost).not.toHaveBeenCalled();
   });
 
   it('should create a new post via endpoint', async () => {
