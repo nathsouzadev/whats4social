@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import {
   HealthCheck,
   HealthCheckService,
@@ -11,6 +11,8 @@ import { MetaService } from '../social/client/meta.service';
 
 @Controller()
 export class HealthController {
+  private readonly logger = new Logger(HealthController.name);
+
   constructor(
     private readonly twitterService: TwitterService,
     private readonly bskyService: BSkyService,
@@ -39,6 +41,7 @@ export class HealthController {
         [service]: { status: 'up' },
       };
     } catch (error) {
+      this.logger.error(`${service} error.message`);
       return {
         [service]: { status: 'down' },
       };

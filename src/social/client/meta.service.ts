@@ -41,7 +41,7 @@ export class MetaService {
     }
   };
 
-  health = async (): Promise<void> => {
+  health = async (): Promise<{ status: string }> => {
     try {
       const response = await axios({
         method: 'GET',
@@ -63,6 +63,8 @@ export class MetaService {
           throw new InternalServerErrorException(`Blocked ${entity.entity_type} ${entity.id}`);
         }
       });
+
+      return { status: 'OK' };
     } catch (error) {
       this.logger.error(error.message);
       throw new InternalServerErrorException(error.message);
