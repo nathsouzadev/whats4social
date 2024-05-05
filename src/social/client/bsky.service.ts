@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BskyAgent, ComAtprotoServerCreateSession } from '@atproto/api';
 
 @Injectable()
 export class BSkyService {
+  private logger = new Logger(BSkyService.name);
   private agent: BskyAgent;
 
   constructor(private configService: ConfigService) {
@@ -25,10 +26,20 @@ export class BSkyService {
     cid: string;
   }> => {
     await this.login();
-    return await this.agent.post({
-      text: message,
-      createdAt: new Date().toISOString(),
-    });
+    try {
+      const response = await this.agent.post({
+        text: message,
+        createdAt: new Date().toISOString(),
+      });
+      
+      this.logger.log(`Post created ${JSON.stringify(response)}`);
+      console.log('Post created', JSON.stringify(response));
+      return response
+    } catch (error) {
+      console.log(error.message);
+      this.logger.error(error.message);
+      throw new InternalServerErrorException(error.message)
+    }
   };
 
   health = async (): Promise<void> => {

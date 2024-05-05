@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   TwitterClient,
@@ -9,6 +9,7 @@ import {
 @Injectable()
 export class TwitterService {
   private client: TwitterClient;
+  private logger = new Logger(TwitterService.name);
 
   constructor(private configService: ConfigService) {
     this.client = new TwitterClient({
@@ -21,10 +22,21 @@ export class TwitterService {
     });
   }
 
-  post = async (message: string): Promise<CreateTweet> =>
-    await this.client.tweetsV2.createTweet({
-      text: message,
-    });
+  post = async (message: string): Promise<CreateTweet> => {
+    try {
+      const response = await this.client.tweetsV2.createTweet({
+        text: message,
+      });
+
+      this.logger.log(`Tweet posted ${JSON.stringify(response)}`);
+      console.log('Tweet posted', JSON.stringify(response));
+      return response
+    } catch (error) {
+      console.log(error.message);
+      this.logger.error(error.message);
+      throw new InternalServerErrorException(error.message)
+    }
+  }
 
   health = async (): Promise<AccountSettings> =>
     this.client.accountsAndUsers.accountSettings();

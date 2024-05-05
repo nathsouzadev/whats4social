@@ -80,14 +80,15 @@ export class SocialService {
     message: string;
     from: string;
     phoneNumberId: string;
+    valid: boolean;
   }): Promise<void> => {
     await this.metaService.sendMessage({
       from: data.from,
-      message: 'Processing your posts',
+      message: data.valid ? 'Processing your posts' : 'Type not supported',
       phoneNumberId: data.phoneNumberId,
     });
 
-    this.whatsPost(data);
+    if(data.valid) this.whatsPost(data);
   };
 
   health = async (): Promise<void> => {

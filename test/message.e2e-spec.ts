@@ -45,7 +45,7 @@ describe('MessageController (e2e)', () => {
 
   describe('receive message from meta', () => {
     describe('answer message to user', () => {
-      it('return 200 when receive a message', () => {
+      it('return 200 when receive a message', async() => {
         const mockCompanyPhone = '551199991234';
         const mockCustomerPhone = '5511999991111';
         nock(`${mockUrl}/${mockPhoneNumberId}/messages`)

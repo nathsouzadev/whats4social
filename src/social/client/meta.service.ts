@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
 @Injectable()
 export class MetaService {
+  private logger = new Logger(MetaService.name);
   private readonly url: string = this.configService.get<string>('wb.url');
   private readonly token: string =
     this.configService.get<string>('wb.graphApiToken');
@@ -32,9 +33,13 @@ export class MetaService {
         },
       });
 
+      this.logger.log(`Message sent ${JSON.stringify(response.data)}`);
+      console.log('Message sent', JSON.stringify(response.data));
       return response.data.messages[0];
     } catch (error) {
       console.log(error.message);
+      this.logger.error(error.message);
+      throw new InternalServerErrorException(error.message)
     }
   };
 
@@ -56,12 +61,15 @@ export class MetaService {
           (entity.entity_type === 'APP' &&
             entity.can_send_message === 'BLOCKED')
         ) {
+          this.logger.error(`Blocked ${entity.entity_type} ${entity.id}`);
           console.log(`Blocked ${entity.entity_type} ${entity.id}`);
-          throw new Error(`Blocked ${entity.entity_type} ${entity.id}`);
+          throw new InternalServerErrorException(`Blocked ${entity.entity_type} ${entity.id}`);
         }
       });
     } catch (error) {
+      this.logger.error(error.message);
       console.log(error);
+      throw new InternalServerErrorException(error.message);
     }
   };
 }
