@@ -41,7 +41,7 @@ export class HealthController {
         [service]: { status: 'up' },
       };
     } catch (error) {
-      this.logger.error(`${service} error.message`);
+      this.logger.error(`${service} ${error.message}`);
       return {
         [service]: { status: 'down' },
       };
