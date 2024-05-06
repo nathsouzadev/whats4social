@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   TwitterClient,
@@ -22,7 +22,7 @@ export class TwitterService {
     });
   }
 
-  post = async (message: string): Promise<CreateTweet> => {
+  post = async (message: string): Promise<CreateTweet | { message: string, error: string }> => {
     try {
       const response = await this.client.tweetsV2.createTweet({
         text: message,
@@ -32,7 +32,10 @@ export class TwitterService {
       return response
     } catch (error) {
       this.logger.error(error.message);
-      throw new InternalServerErrorException(error.message)
+      return {
+        message: 'Failed to post!',
+        error: error.message,
+      }
     }
   }
 

@@ -25,7 +25,7 @@ export class SocialService {
         id: string;
         text: string;
       };
-    };
+    } | { message: string, error: string };
     bsky: {
       uri: string;
       cid: string;
@@ -49,20 +49,18 @@ export class SocialService {
   }): Promise<{
     twitter: {
       id: string;
-    };
+    } | { message: string };
     bsky: {
       cid: string;
     };
   }> => {
     const { twitter, bsky } = await this.webPost(data.message);
 
-    if (twitter.data.id) {
-      this.sendMessageToUser({
-        from: data.from,
-        message: 'Twet posted successfully',
-        phoneNumberId: data.phoneNumberId,
-      });
-    }
+    this.sendMessageToUser({
+      from: data.from,
+      message: Object.keys(twitter).includes('data') ? 'Twet posted successfully' : '❌ Failed to post on Twitter!',
+      phoneNumberId: data.phoneNumberId,
+    });
 
     if (bsky.cid) {
       this.sendMessageToUser({
@@ -73,8 +71,10 @@ export class SocialService {
     }
 
     return {
-      twitter: {
-        id: twitter.data.id,
+      twitter: Object.keys(twitter).includes('data') ? {
+        id: twitter['data'].id,
+      } : {
+        message: 'Failed to post!',
       },
       bsky: {
         cid: bsky.cid,
