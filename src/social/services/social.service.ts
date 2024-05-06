@@ -28,14 +28,20 @@ export class SocialService {
     twitter: CreateTweet | SocialError;
     bsky: BskyResponse | SocialError;
   }> => {
-    const [twitter, bsky] = await Promise.all([
+    const [ twitter, bsky ] = await Promise.allSettled([
       this.twitterService.post(message),
       this.bskyService.post(message),
     ]);
 
     return {
-      twitter,
-      bsky,
+      twitter: twitter.status === 'fulfilled' ? twitter.value : {
+        message: 'Failed to post!',
+        error: 'Error creating a new post',
+      },
+      bsky: bsky.status === 'fulfilled' ? bsky.value : {
+        message: 'Failed to post!',
+        error: 'Error creating a new post',
+      },
     };
   };
 

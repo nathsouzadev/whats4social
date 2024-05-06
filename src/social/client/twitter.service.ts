@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   TwitterClient,
@@ -33,10 +33,7 @@ export class TwitterService {
       return response
     } catch (error) {
       this.logger.error(error.message);
-      return {
-        message: 'Failed to post!',
-        error: error.message,
-      }
+      throw new InternalServerErrorException('Failed to post!');
     }
   }
 
