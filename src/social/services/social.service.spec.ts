@@ -83,7 +83,7 @@ describe('SocialService', () => {
     });
   });
 
-  it('should complete bsky post if twitter post failed', async() => {
+  it('should complete bsky post if twitter post fail', async() => {
     jest.spyOn(service, 'webPost').mockImplementation(() =>
       Promise.resolve({
         twitter: {
@@ -119,6 +119,48 @@ describe('SocialService', () => {
       },
       bsky: {
         cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+      },
+    });
+  })
+
+  it('should complete twitter post if bsky post fail', async() => {
+    jest.spyOn(service, 'webPost').mockImplementation(() =>
+      Promise.resolve({
+        twitter: {
+          data: {
+            id: '1786581556854714590',
+            text: 'New tuite',
+          },
+        },
+        bsky: {
+          message: 'Failed to post!',
+          error: 'Error creating a new post',
+        },
+      }),
+    );
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+
+    const mockMessage = 'New tuite';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    };
+    const response = await service.whatsPost(mockData);
+    expect(service.webPost).toBeCalledWith(mockMessage);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
+    expect(response).toMatchObject({
+      twitter: {
+        id: '1786581556854714590',
+      },
+      bsky: {
+        message: 'Failed to post!',
       },
     });
   })

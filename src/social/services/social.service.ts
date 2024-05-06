@@ -29,7 +29,7 @@ export class SocialService {
     bsky: {
       uri: string;
       cid: string;
-    };
+    } | { message: string, error: string };
   }> => {
     const [twitter, bsky] = await Promise.all([
       this.twitterService.post(message),
@@ -52,23 +52,23 @@ export class SocialService {
     } | { message: string };
     bsky: {
       cid: string;
-    };
+    } | { message: string };
   }> => {
     const { twitter, bsky } = await this.webPost(data.message);
 
     this.sendMessageToUser({
       from: data.from,
-      message: Object.keys(twitter).includes('data') ? 'Twet posted successfully' : '❌ Failed to post on Twitter!',
+      message: Object.keys(twitter).includes('data') ? 
+        'Twet posted successfully' : 
+        '❌ Failed to post on Twitter!',
       phoneNumberId: data.phoneNumberId,
     });
 
-    if (bsky.cid) {
-      this.sendMessageToUser({
-        from: data.from,
-        message: 'BSky posted successfully',
-        phoneNumberId: data.phoneNumberId,
-      });
-    }
+    this.sendMessageToUser({
+      from: data.from,
+      message: Object.keys(bsky).includes('cid') ? 'BSky posted successfully' : '❌ Failed to post on Bluesky!',
+      phoneNumberId: data.phoneNumberId,
+    });
 
     return {
       twitter: Object.keys(twitter).includes('data') ? {
@@ -76,9 +76,9 @@ export class SocialService {
       } : {
         message: 'Failed to post!',
       },
-      bsky: {
-        cid: bsky.cid,
-      },
+      bsky: Object.keys(bsky).includes('cid') ? {
+        cid: bsky['cid'],
+      } : { message: 'Failed to post!' },
     };
   };
 
