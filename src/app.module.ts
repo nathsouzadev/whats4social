@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MessageModule } from './message/message.module';
 import { RouterModule } from '@nestjs/core';
 import { router } from './config/router';
@@ -7,6 +7,7 @@ import { validationSchema } from './config/interface/config.schema';
 import { SocialModule } from './social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
+import { LoggerMiddleware } from './config/logger-middleware';
 
 @Module({
   imports: [
@@ -21,4 +22,10 @@ import config from './config/config';
     HealthModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
