@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BskyAgent, ComAtprotoServerCreateSession } from '@atproto/api';
 import { BskyResponse } from '../model/bsky-response.model';
@@ -35,10 +35,7 @@ export class BSkyService {
       return response
     } catch (error) {
       this.logger.error(error.message);
-      return {
-        message: 'Failed to post!',
-        error: error.message,
-      }
+      throw new InternalServerErrorException('Failed to post');
     }
   };
 

@@ -283,4 +283,60 @@ describe('SocialService', () => {
       },
     });
   });
+
+  it('should create a twitter post, if bsky faild', async () => {
+    jest.spyOn(mockTwitterService, 'post').mockImplementation(() =>
+      Promise.resolve({
+        data: {
+          id: '1786581556854714590',
+          text: 'New tuite',
+        },
+      }),
+    );
+    jest.spyOn(mockBSkyService, 'post').mockImplementation(() =>
+      Promise.reject(new Error('Failed to create post'))
+    );
+
+    const response = await service.webPost('New tuite');
+    expect(mockTwitterService.post).toBeCalledWith('New tuite');
+    expect(mockBSkyService.post).toBeCalledWith('New tuite');
+    expect(response).toMatchObject({
+      twitter: {
+        data: {
+          id: '1786581556854714590',
+          text: 'New tuite',
+        },
+      },
+      bsky: {
+        message: 'Failed to post!',
+        error: 'Error creating a new post',
+      },
+    });
+  })
+
+  it('should create a bsky post, if twitter faild', async () => {
+    jest.spyOn(mockTwitterService, 'post').mockImplementation(() =>
+      Promise.reject(new Error('Failed to create post'))
+    );
+    jest.spyOn(mockBSkyService, 'post').mockImplementation(() =>
+      Promise.resolve({
+        uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
+        cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+      }),
+    );
+
+    const response = await service.webPost('New tuite');
+    expect(mockTwitterService.post).toBeCalledWith('New tuite');
+    expect(mockBSkyService.post).toBeCalledWith('New tuite');
+    expect(response).toMatchObject({
+      twitter: {
+        message: 'Failed to post!',
+        error: 'Error creating a new post',
+      },
+      bsky: {
+        uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
+        cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+      },
+    });
+  })
 });

@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BSkyService } from './bsky.service';
 import { ConfigService } from '@nestjs/config';
+import { InternalServerErrorException } from '@nestjs/common';
 
 const mockLogin = jest.fn();
 const mockPost = jest.fn();
@@ -55,15 +56,14 @@ describe('BSkyService', () => {
 
   it('should throw an error when post creation fails', async () => {
     mockPost.mockImplementation(() => Promise.reject(new Error('Failed to create post')));
-    const response = await service.post('New post')
+    
+    await expect(service.post('New post')).rejects.toThrow(
+      new InternalServerErrorException('Failed to post'),
+    );
     expect(mockLogin).toHaveBeenCalled();
     expect(mockPost).toHaveBeenCalledWith({
       text: 'New post',
       createdAt: expect.any(String),
-    });
-    expect(response).toMatchObject({
-      message: 'Failed to post!',
-      error: 'Failed to create post',
     });
   });
 
