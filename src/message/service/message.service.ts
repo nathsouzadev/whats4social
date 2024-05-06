@@ -18,7 +18,7 @@ export class MessageService {
     if(Object.keys(data[0].changes[0].value).includes('messages')) {
       const message = data[0].changes[0]?.value?.['messages'][0];
     
-      if(message?.type === 'text' && message?.text?.body !== 'teste') {
+      if(message?.type === 'text') {
         await this.reply({
           from: message.from,
           message: message.text.body,
