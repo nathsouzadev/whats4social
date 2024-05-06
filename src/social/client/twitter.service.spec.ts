@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TwitterService } from './twitter.service';
 import { ConfigService } from '@nestjs/config';
-import { InternalServerErrorException } from '@nestjs/common';
 
 const mockCreateTweet = jest.fn();
 const mockAccountSettings = jest.fn();
@@ -56,12 +55,16 @@ describe('TwitterService', () => {
     });
   });
 
-  it('should throw an error when creating a new post', async () => {
+  it('should return a error message when fail to create a new post', async () => {
     mockCreateTweet.mockImplementation(() =>
       Promise.reject(new Error('Error creating a new post')),
     );
 
-    await expect(service.post('New tuite')).rejects.toThrow(new InternalServerErrorException('Error creating a new post'))
+    const response = await service.post('New tuite')
+    expect(response).toMatchObject({
+        message: 'Failed to post!',
+        error: 'Error creating a new post',
+      });
   });
 
   it('should return account settings', async () => {

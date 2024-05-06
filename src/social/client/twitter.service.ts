@@ -1,10 +1,11 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   TwitterClient,
   CreateTweet,
   AccountSettings,
 } from 'twitter-api-client';
+import { SocialError } from '../model/social-midia-response-error.model';
 
 @Injectable()
 export class TwitterService {
@@ -22,7 +23,7 @@ export class TwitterService {
     });
   }
 
-  post = async (message: string): Promise<CreateTweet> => {
+  post = async (message: string): Promise<CreateTweet | SocialError> => {
     try {
       const response = await this.client.tweetsV2.createTweet({
         text: message,
@@ -32,7 +33,10 @@ export class TwitterService {
       return response
     } catch (error) {
       this.logger.error(error.message);
-      throw new InternalServerErrorException(error.message)
+      return {
+        message: 'Failed to post!',
+        error: error.message,
+      }
     }
   }
 

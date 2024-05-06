@@ -72,7 +72,16 @@ describe('SocialService', () => {
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
-    expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ Twet posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ BSky posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
     expect(response).toMatchObject({
       twitter: {
         id: '1786581556854714590',
@@ -82,6 +91,106 @@ describe('SocialService', () => {
       },
     });
   });
+
+  it('should complete bsky post if twitter post fail', async() => {
+    jest.spyOn(service, 'webPost').mockImplementation(() =>
+      Promise.resolve({
+        twitter: {
+          message: 'Failed to post!',
+          error: 'Error creating a new post',
+        },
+        bsky: {
+          uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
+          cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+        },
+      }),
+    );
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+
+    const mockMessage = 'New tuite';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    };
+    const response = await service.whatsPost(mockData);
+    expect(service.webPost).toBeCalledWith(mockMessage);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '❌ Failed to post on Twitter!',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ BSky posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(response).toMatchObject({
+      twitter: {
+        message: 'Failed to post!',
+      },
+      bsky: {
+        cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
+      },
+    });
+  })
+
+  it('should complete twitter post if bsky post fail', async() => {
+    jest.spyOn(service, 'webPost').mockImplementation(() =>
+      Promise.resolve({
+        twitter: {
+          data: {
+            id: '1786581556854714590',
+            text: 'New tuite',
+          },
+        },
+        bsky: {
+          message: 'Failed to post!',
+          error: 'Error creating a new post',
+        },
+      }),
+    );
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+
+    const mockMessage = 'New tuite';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    };
+    const response = await service.whatsPost(mockData);
+    expect(service.webPost).toBeCalledWith(mockMessage);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ Twet posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '❌ Failed to post on Bluesky!',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(response).toMatchObject({
+      twitter: {
+        id: '1786581556854714590',
+      },
+      bsky: {
+        message: 'Failed to post!',
+      },
+    });
+  })
 
   it('should reply to a message via whatsapp with process info', async () => {
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
@@ -108,7 +217,7 @@ describe('SocialService', () => {
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId
     };
-    await service.reply(mockData);
+    await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: 'Processing your posts',
       from: mockFrom,
@@ -133,7 +242,7 @@ describe('SocialService', () => {
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId
     };
-    await service.reply(mockData);
+    await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: 'Reply your test. Not posted on social!',
       from: mockFrom,
