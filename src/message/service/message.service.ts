@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SocialService } from '../../social/services/social.service';
-import { MetaPayload } from '../models/meta-message.model';
+import { WBPayloadEntry } from '../models/meta-message.model';
 
 @Injectable()
 export class MessageService {
@@ -12,22 +12,19 @@ export class MessageService {
     from: string;
     message: string;
     phoneNumberId: string;
-    valid: boolean;
   }) => this.socialService.reply(data);
 
-  handleMessage = async(data: MetaPayload) => {
-    const message = data.entry?.[0]?.changes[0]?.value?.['messages'][0];
+  handleMessage = async(data: WBPayloadEntry[]) => {
+    if(Object.keys(data[0].changes[0].value).includes('messages')) {
+      const message = data[0].changes[0]?.value?.['messages'][0];
     
-    if(message?.type === 'text' && message?.text?.body !== 'teste') {
-      const business_phone_number_id =
-        data.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-
-      await this.reply({
-        from: message.from,
-        message: message.text.body,
-        phoneNumberId: business_phone_number_id,
-        valid: message?.type === 'text',
-      });
+      if(message?.type === 'text' && message?.text?.body !== 'teste') {
+        await this.reply({
+          from: message.from,
+          message: message.text.body,
+          phoneNumberId: data[0].changes[0].value.metadata.phone_number_id
+        });
+      }
     }
   }
 }

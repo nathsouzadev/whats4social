@@ -83,7 +83,7 @@
       ".dto.ts",
       "./src/config/*",
       ".mock.ts"
-  ],
+    ],
     "coverageDirectory": "../coverage",
     "coverageThreshold": {
       "global": {
