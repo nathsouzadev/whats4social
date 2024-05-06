@@ -14,6 +14,7 @@ export class HealthController {
 
   constructor(
     private readonly twitterService: TwitterService,
+    private readonly bskyService: MetaService,
     private readonly metaService: MetaService,
     private readonly healtCheckService: HealthCheckService,
   ) {}
@@ -24,6 +25,7 @@ export class HealthController {
   async health() {
     return this.healtCheckService.check([
       () => this.checkStatus('twitterClient', this.twitterService.health()),
+      () => this.checkStatus('bSkyClient', this.bskyService.health()),
       () => this.checkStatus('metaClient', this.metaService.health()),
     ]);
   }
