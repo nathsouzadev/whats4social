@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageService } from './message.service';
 import { SocialService } from '../../social/services/social.service';
-import { MetaPayload } from '../models/meta-message.model';
+import { mockMetaPayload } from '../../__mocks__/meta-message.mock';
 
 describe('MessageService', () => {
   let service: MessageService;
@@ -44,41 +44,28 @@ describe('MessageService', () => {
   });
 
   it('should reply message with valid true', async () => {
-    const mockData = {
-      entry: [
-        {
-          changes: [
-            {
-              value: {
-                messages: [
-                  {
-                    type: 'text',
-                    from: '5511444412345',
-                    text: {
-                      body: 'New tuite',
-                    },
-                  },
-                ],
-                metadata: {
-                  phone_number_id: '5511432112345',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    };
+    const mockData = mockMetaPayload('message').entry
 
     jest
       .spyOn(mockSocialService, 'reply')
       .mockImplementation(() => Promise.resolve(void 0));
 
-    await service.handleMessage(mockData as MetaPayload);
+    await service.handleMessage(mockData);
     expect(mockSocialService.reply).toHaveBeenCalledWith({
-      from: '5511444412345',
-      message: 'New tuite',
-      phoneNumberId: '5511432112345',
-      valid: true,
+      from: '5511999991234',
+      message: 'New post',
+      phoneNumberId: '123456789012345'
     });
   });
+
+  it('should not reply message with type different from text', async () => {
+    const mockData = mockMetaPayload('status').entry
+
+    jest
+      .spyOn(mockSocialService, 'reply')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    await service.handleMessage(mockData);
+    expect(mockSocialService.reply).not.toHaveBeenCalled();
+  })
 });

@@ -11,6 +11,12 @@ export class SocialService {
     private readonly metaService: MetaService,
   ) {}
 
+  private sendMessageToUser = async (data: {
+    from: string;
+    message: string;
+    phoneNumberId: string;
+  }) => this.metaService.sendMessage(data);
+
   webPost = async (
     message: string,
   ): Promise<{
@@ -51,7 +57,7 @@ export class SocialService {
     const { twitter, bsky } = await this.webPost(data.message);
 
     if (twitter.data.id) {
-      this.metaService.sendMessage({
+      this.sendMessageToUser({
         from: data.from,
         message: 'Twet posted successfully',
         phoneNumberId: data.phoneNumberId,
@@ -59,7 +65,7 @@ export class SocialService {
     }
 
     if (bsky.cid) {
-      this.metaService.sendMessage({
+      this.sendMessageToUser({
         from: data.from,
         message: 'BSky posted successfully',
         phoneNumberId: data.phoneNumberId,
@@ -80,14 +86,13 @@ export class SocialService {
     message: string;
     from: string;
     phoneNumberId: string;
-    valid: boolean;
   }): Promise<void> => {
     await this.metaService.sendMessage({
       from: data.from,
-      message: data.valid ? 'Processing your posts' : 'Type not supported',
+      message: data.message.toLowerCase() === 'test' ? 'Reply your test. Not posted on social!' : 'Processing your posts',
       phoneNumberId: data.phoneNumberId,
     });
 
-    if(data.valid) this.whatsPost(data);
+    if(data.message.toLowerCase() != 'test') this.whatsPost(data)
   };
 }

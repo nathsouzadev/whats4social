@@ -26,7 +26,7 @@ export class MessageController {
   async getHello(@Body() messageData: MetaMessageDTO) {
     const t0 = performance.now();
     
-    await this.messageService.handleMessage(messageData);
+    await this.messageService.handleMessage(messageData.entry);
 
     this.logger.log(JSON.stringify({
       body: messageData,
