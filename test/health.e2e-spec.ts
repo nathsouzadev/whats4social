@@ -80,11 +80,13 @@ describe('HealthController (e2e)', () => {
           status: 'ok',
           info: {
             twitterClient: { status: 'up' },
+            bSkyClient: { status: 'up' },
             metaClient: { status: 'up' },
           },
           error: {},
           details: {
             twitterClient: { status: 'up' },
+            bSkyClient: { status: 'up' },
             metaClient: { status: 'up' },
           },
         });
