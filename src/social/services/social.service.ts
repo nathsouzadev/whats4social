@@ -2,6 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { TwitterService } from '../client/twitter.service';
 import { BSkyService } from '../client/bsky.service';
 import { MetaService } from '../client/meta.service';
+import { CreateTweet } from 'twitter-api-client';
+import { BskyResponse } from '../model/bsky-response.model';
+import { SocialError } from '../model/social-midia-response-error.model';
+import { WhatsPostResponseModel } from '../model/whats-post-response.model';
+import { WhatsPostModel } from '../model/whats-post.model';
 
 @Injectable()
 export class SocialService {
@@ -20,16 +25,8 @@ export class SocialService {
   webPost = async (
     message: string,
   ): Promise<{
-    twitter: {
-      data: {
-        id: string;
-        text: string;
-      };
-    } | { message: string, error: string };
-    bsky: {
-      uri: string;
-      cid: string;
-    } | { message: string, error: string };
+    twitter: CreateTweet | SocialError;
+    bsky: BskyResponse | SocialError;
   }> => {
     const [twitter, bsky] = await Promise.all([
       this.twitterService.post(message),
@@ -42,31 +39,22 @@ export class SocialService {
     };
   };
 
-  whatsPost = async (data: {
-    message: string;
-    from: string;
-    phoneNumberId: string;
-  }): Promise<{
-    twitter: {
-      id: string;
-    } | { message: string };
-    bsky: {
-      cid: string;
-    } | { message: string };
-  }> => {
+  whatsPost = async (data: WhatsPostModel): Promise<WhatsPostResponseModel> => {
     const { twitter, bsky } = await this.webPost(data.message);
 
     this.sendMessageToUser({
       from: data.from,
       message: Object.keys(twitter).includes('data') ? 
-        'Twet posted successfully' : 
+        '✅ Twet posted successfully' : 
         '❌ Failed to post on Twitter!',
       phoneNumberId: data.phoneNumberId,
     });
 
     this.sendMessageToUser({
       from: data.from,
-      message: Object.keys(bsky).includes('cid') ? 'BSky posted successfully' : '❌ Failed to post on Bluesky!',
+      message: Object.keys(bsky).includes('cid') ? 
+        '✅ BSky posted successfully' : 
+        '❌ Failed to post on Bluesky!',
       phoneNumberId: data.phoneNumberId,
     });
 
@@ -82,11 +70,7 @@ export class SocialService {
     };
   };
 
-  reply = async (data: {
-    message: string;
-    from: string;
-    phoneNumberId: string;
-  }): Promise<void> => {
+  replyToWhatsapp = async (data: WhatsPostModel): Promise<void> => {
     await this.metaService.sendMessage({
       from: data.from,
       message: data.message.toLowerCase() === 'test' ? 'Reply your test. Not posted on social!' : 'Processing your posts',

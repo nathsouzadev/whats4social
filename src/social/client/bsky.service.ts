@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BskyAgent, ComAtprotoServerCreateSession } from '@atproto/api';
+import { BskyResponse } from '../model/bsky-response.model';
+import { SocialError } from '../model/social-midia-response-error.model';
 
 @Injectable()
 export class BSkyService {
@@ -21,10 +23,7 @@ export class BSkyService {
 
   post = async (
     message: string,
-  ): Promise<{
-    uri: string;
-    cid: string;
-  } | { message: string, error: string }> => {
+  ): Promise<BskyResponse | SocialError> => {
     await this.login();
     try {
       const response = await this.agent.post({

@@ -72,7 +72,16 @@ describe('SocialService', () => {
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
-    expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ Twet posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ BSky posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
     expect(response).toMatchObject({
       twitter: {
         id: '1786581556854714590',
@@ -112,7 +121,16 @@ describe('SocialService', () => {
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
-    expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '❌ Failed to post on Twitter!',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ BSky posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
     expect(response).toMatchObject({
       twitter: {
         message: 'Failed to post!',
@@ -154,7 +172,16 @@ describe('SocialService', () => {
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
-    expect(mockMetaService.sendMessage).toHaveBeenCalledTimes(2);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '✅ Twet posted successfully',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: '❌ Failed to post on Bluesky!',
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
     expect(response).toMatchObject({
       twitter: {
         id: '1786581556854714590',
@@ -190,7 +217,7 @@ describe('SocialService', () => {
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId
     };
-    await service.reply(mockData);
+    await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: 'Processing your posts',
       from: mockFrom,
@@ -215,7 +242,7 @@ describe('SocialService', () => {
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId
     };
-    await service.reply(mockData);
+    await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: 'Reply your test. Not posted on social!',
       from: mockFrom,

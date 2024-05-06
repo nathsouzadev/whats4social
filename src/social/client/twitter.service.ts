@@ -5,6 +5,7 @@ import {
   CreateTweet,
   AccountSettings,
 } from 'twitter-api-client';
+import { SocialError } from '../model/social-midia-response-error.model';
 
 @Injectable()
 export class TwitterService {
@@ -22,7 +23,7 @@ export class TwitterService {
     });
   }
 
-  post = async (message: string): Promise<CreateTweet | { message: string, error: string }> => {
+  post = async (message: string): Promise<CreateTweet | SocialError> => {
     try {
       const response = await this.client.tweetsV2.createTweet({
         text: message,
