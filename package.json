@@ -24,7 +24,7 @@
     "@atproto/api": "^0.12.7",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^9.0.0",
-    "@nestjs/config": "^3.2.0",
+    "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/mapped-types": "*",
