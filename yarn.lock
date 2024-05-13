@@ -72,10 +72,10 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@atproto/api@^0.12.7":
-  version "0.12.7"
-  resolved "https://registry.npmjs.org/@atproto/api/-/api-0.12.7.tgz"
-  integrity sha512-WHPX+rO8K24Mb3gMofUz7v8GLtTrVUzq9ZfUOxqP/tqDIlYPWEWc5ess6B8joIP0jYLZCyYakLV6giinXjpE6Q==
+"@atproto/api@^0.12.9":
+  version "0.12.9"
+  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.12.9.tgz#5ae040980e574a5d9496368c4ca032c0cda174ec"
+  integrity sha512-3D4n2ZAAsDRnjevvcoIxQxuMMoqc+7vtVyP7EnrEdeOmRSCF9j8yXTqhn6rcHCbzcs3DKyYR26nQemtZsMsE0g==
   dependencies:
     "@atproto/common-web" "^0.3.0"
     "@atproto/lexicon" "^0.4.0"
