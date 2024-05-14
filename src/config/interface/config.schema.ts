@@ -13,6 +13,7 @@ export const validationSchema = Joi.object({
   BSKY_IDENTIFIER: Joi.string().required(),
   BSKY_PASSWORD: Joi.string().required(),
   BETTERSTACK_URL: Joi.string().required(),
+  BETTERSTACK_TOKEN: Joi.string().required(),
   MONITOR_ID_1: Joi.string().required(),
   MONITOR_ID_2: Joi.string().required(),
 });

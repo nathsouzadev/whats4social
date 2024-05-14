@@ -21,6 +21,10 @@ env:
   TWITTER_ACCESS_TOKEN_SECRET: 'TWITTER_ACCESS_TOKEN_SECRET'
   BSKY_IDENTIFIER: 'BSKY_IDENTIFIER'
   BSKY_PASSWORD: 'BSKY_PASSWORD'
+  BETTERSTACK_URL: 'https://uptime.betterstack.com'
+  BETTERSTACK_TOKEN: 'token'
+  MONITOR_ID_1: 'monitor-id-1'
+  MONITOR_ID_2: 'monitor-id-2'
 
 jobs:
   lint:

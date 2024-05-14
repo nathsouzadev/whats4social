@@ -7,9 +7,11 @@ import axios from 'axios';
 export class CronjobService {
   private readonly logger = new Logger(CronjobService.name);
   private url: string
+  private token: string
 
   constructor(private configService: ConfigService) {
     this.url = this.configService.get<string>('betterStack.url');
+    this.token = this.configService.get<string>('betterStack.token');
   }
 
   private check31days = (): boolean => {
@@ -27,7 +29,7 @@ export class CronjobService {
           url: `${this.url}/api/v2/monitors/${id}`,
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer token',
+            Authorization: `Beare ${this.token}`,
           },
           data: {
             paused

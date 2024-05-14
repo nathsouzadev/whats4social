@@ -20,7 +20,8 @@ export default (): IConfig => ({
     service: 'https://bsky.social',
   },
   betterStack: {
-    url: process.env.BETTER_STACK_URL,
+    url: process.env.BETTERSTACK_URL,
+    token: process.env.BETTERSTACK_TOKEN,
     monitorId1: process.env.MONITOR_ID_1,
     monitorId2: process.env.MONITOR_ID_2,
   },

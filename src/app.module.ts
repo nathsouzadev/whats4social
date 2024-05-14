@@ -18,7 +18,7 @@ import { CronjobModule } from './cronjob/cronjob.module';
       validationSchema,
       load: [config],
     }),
-    ScheduleModule,
+    ScheduleModule.forRoot(),
     MessageModule,
     RouterModule.register(router),
     SocialModule,
