@@ -26,6 +26,9 @@ describe('CronjobService', () => {
                 'https://my-service.com',
               )
               .mockReturnValueOnce(
+                'my-token',
+              )
+              .mockReturnValueOnce(
                 mockMonitorId1,
               )
               .mockReturnValueOnce(
