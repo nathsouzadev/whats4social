@@ -19,4 +19,9 @@ export default (): IConfig => ({
     password: process.env.BSKY_PASSWORD,
     service: 'https://bsky.social',
   },
+  betterStack: {
+    url: process.env.BETTER_STACK_URL,
+    monitorId1: process.env.MONITOR_ID_1,
+    monitorId2: process.env.MONITOR_ID_2,
+  },
 });
