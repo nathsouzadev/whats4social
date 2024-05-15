@@ -8,8 +8,6 @@ import { SocialModule } from './social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
 import { LoggerMiddleware } from './config/logger-middleware';
-import { ScheduleModule } from '@nestjs/schedule';
-import { CronjobModule } from './cronjob/cronjob.module';
 
 @Module({
   imports: [
@@ -18,12 +16,10 @@ import { CronjobModule } from './cronjob/cronjob.module';
       validationSchema,
       load: [config],
     }),
-    ScheduleModule.forRoot(),
     MessageModule,
     RouterModule.register(router),
     SocialModule,
     HealthModule,
-    CronjobModule,
   ],
 })
 export class AppModule implements NestModule {
