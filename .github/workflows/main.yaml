@@ -21,10 +21,6 @@ env:
   TWITTER_ACCESS_TOKEN_SECRET: 'TWITTER_ACCESS_TOKEN_SECRET'
   BSKY_IDENTIFIER: 'BSKY_IDENTIFIER'
   BSKY_PASSWORD: 'BSKY_PASSWORD'
-  BETTERSTACK_URL: 'https://uptime.betterstack.com'
-  BETTERSTACK_TOKEN: 'token'
-  MONITOR_ID_1: 'monitor-id-1'
-  MONITOR_ID_2: 'monitor-id-2'
 
 jobs:
   lint:
@@ -44,7 +40,7 @@ jobs:
 
         # ESLint and Prettier must be in `package.json`
       - name: Install dependencies
-        run: yarn install
+        run: yarn --frozen-lockfile
 
       - name: Run lint
         run: yarn lint
@@ -65,7 +61,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn --frozen-lockfile
 
       - name: Run unit tests
         run: yarn test:cov
@@ -86,7 +82,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn --frozen-lockfile
 
       - name: Running integration tests
         run: yarn test:e2e
