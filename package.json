@@ -30,7 +30,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/terminus": "^10.2.3",
-    "axios": "^1.6.8",
+    "axios": "^1.7.0",
     "joi": "^17.13.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.7",
