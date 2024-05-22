@@ -5,7 +5,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 import { ConfigService } from '@nestjs/config';
 import { Webhook } from 'svix'
 
-@Controller('clerk')
+@Controller()
 export class ClerkController {
   constructor(
     private readonly config: ConfigService,
