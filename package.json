@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@atproto/api": "^0.12.9",
+    "@clerk/nextjs": "^5.0.12",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.2",
@@ -35,6 +36,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.7",
     "rxjs": "^7.2.0",
+    "svix": "^1.24.0",
     "twitter-api-client": "^1.6.1"
   },
   "devDependencies": {

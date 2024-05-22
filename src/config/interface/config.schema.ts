@@ -12,4 +12,5 @@ export const validationSchema = Joi.object({
   TWITTER_ACCESS_TOKEN_SECRET: Joi.string().required(),
   BSKY_IDENTIFIER: Joi.string().required(),
   BSKY_PASSWORD: Joi.string().required(),
+  CLERK_WEBHOOK_SECRET: Joi.string().required(),
 });

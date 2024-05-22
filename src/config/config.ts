@@ -19,4 +19,7 @@ export default (): IConfig => ({
     password: process.env.BSKY_PASSWORD,
     service: 'https://bsky.social',
   },
+  clerk: {
+    webhookSecret: process.env.CLERK_WEBHOOK_SECRET,
+  }
 });
