@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@atproto/api": "^0.12.13",
-    "@clerk/nextjs": "^5.0.12",
+    "@clerk/nextjs": "^5.1.6",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.2",
