@@ -45,7 +45,7 @@ describe('MessageController (e2e)', () => {
 
   describe('receive message from meta', () => {
     describe('answer message to user', () => {
-      it('return 200 when receive a message', async() => {
+      it('return 200 when receive a message', async () => {
         const mockCompanyPhone = '551199991234';
         const mockCustomerPhone = '5511999991111';
         nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
@@ -71,6 +71,41 @@ describe('MessageController (e2e)', () => {
           .send(
             mockMetaMessage({
               message: 'Some message',
+              receiver: mockCompanyPhone,
+              sender: mockCustomerPhone,
+              phoneNumberId: mockPhoneNumberId,
+              type: 'message',
+            }),
+          )
+          .expect(200);
+      });
+
+      it('return 200 when receive a reply message /bank', async () => {
+        const mockCompanyPhone = '551199991234';
+        const mockCustomerPhone = '5511999991111';
+        nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
+          .post('')
+          .times(3)
+          .reply(200, {
+            messaging_product: 'whatsapp',
+            contacts: [
+              {
+                input: mockCustomerPhone,
+                wa_id: mockCustomerPhone,
+              },
+            ],
+            messages: [
+              {
+                id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+              },
+            ],
+          });
+
+        return request(app.getHttpServer())
+          .post('/message')
+          .send(
+            mockMetaMessage({
+              message: '/bank',
               receiver: mockCompanyPhone,
               sender: mockCustomerPhone,
               phoneNumberId: mockPhoneNumberId,

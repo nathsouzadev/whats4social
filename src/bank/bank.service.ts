@@ -13,6 +13,7 @@ export class BankService {
       service: 'bank',
       content: {
         type: 'interactive',
+        recipient_type: 'individual',
         interactive: {
           type: 'button',
           body: {

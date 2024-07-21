@@ -68,7 +68,7 @@ export interface QuickReplyReceived extends MetaMessage {
 export interface WBPayloadEntry {
   id: string;
   changes: Array<{
-    value: MessageReceived | UpdateStatus;
+    value: MessageReceived | UpdateStatus | QuickReplyReceived;
     field: 'messages';
   }>;
 }
