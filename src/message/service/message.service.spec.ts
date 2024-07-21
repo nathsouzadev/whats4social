@@ -2,10 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MessageService } from './message.service';
 import { SocialService } from '../../social/services/social.service';
 import { mockMetaPayload } from '../../__mocks__/meta-message.mock';
+import { ConfigService } from '@nestjs/config';
 
 describe('MessageService', () => {
   let service: MessageService;
   let mockSocialService: SocialService;
+
+  const mockPhoneNumber = '5521880881234'
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -15,6 +18,14 @@ describe('MessageService', () => {
           provide: SocialService,
           useValue: {
             replyToWhatsapp: jest.fn(),
+          },
+        },
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest
+              .fn()
+              .mockReturnValue(mockPhoneNumber),
           },
         },
       ],
@@ -44,7 +55,7 @@ describe('MessageService', () => {
   });
 
   it('should reply message with valid true', async () => {
-    const mockData = mockMetaPayload('message').entry
+    const mockData = mockMetaPayload('message', mockPhoneNumber).entry
 
     jest
       .spyOn(mockSocialService, 'replyToWhatsapp')
@@ -52,7 +63,7 @@ describe('MessageService', () => {
 
     await service.handleMessage(mockData);
     expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
-      from: '5511999991234',
+      from: mockPhoneNumber,
       message: 'New post',
       phoneNumberId: '123456789012345'
     });

@@ -43,18 +43,18 @@ export const mockMetaMessage = {
 }
 
 const messageTypes = {
-  message: () => ({
+  message: (phoneNumber: string) => ({
     contacts: [
       {
         profile: {
           name: 'Ada Lovelace',
         },
-        wa_id: '5511999991234',
+        wa_id: phoneNumber,
       },
     ],
     messages: [
       {
-        from: '5511999991234',
+        from: phoneNumber,
         id: 'wamid.HBgNNTUxMTk5MDExNjU1NRUCABIYFsWEQjA2QzEzMzM4QzhEMTFFRDgyNjkA',
         timestamp: 1714873932,
         text: {
@@ -88,7 +88,7 @@ const messageTypes = {
   }),
 }
 
-export const mockMetaPayload = (type: string): MetaPayload => ({
+export const mockMetaPayload = (type: string, phoneNumber = '5511999991234'): MetaPayload => ({
   object: 'whatsapp_business_account',
   entry: [
     {
@@ -101,7 +101,7 @@ export const mockMetaPayload = (type: string): MetaPayload => ({
               display_phone_number: '5511912344321',
               phone_number_id: '123456789012345',
             },
-            ...messageTypes[type](),
+            ...messageTypes[type](phoneNumber),
           },
           field: 'messages',
         },

@@ -7,6 +7,7 @@ export default (): IConfig => ({
     verifyToken: process.env.WEBHOOK_VERIFY_TOKEN,
     graphApiToken: process.env.GRAPH_API_TOKEN,
     phoneNumberId: process.env.GRAPH_PHONE_NUMBER_ID,
+    phoneNumber: process.env.WB_PHONE_NUMBER,
   },
   twitter: {
     accessToken: process.env.TWITTER_ACCESS_TOKEN,

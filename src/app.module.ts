@@ -8,7 +8,6 @@ import { SocialModule } from './social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
 import { LoggerMiddleware } from './config/logger-middleware';
-import { ClerkModule } from './clerk/clerk.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { ClerkModule } from './clerk/clerk.module';
     RouterModule.register(router),
     SocialModule,
     HealthModule,
-    ClerkModule,
   ],
 })
 export class AppModule implements NestModule {
