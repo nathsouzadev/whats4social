@@ -54,6 +54,11 @@ describe('MetaService', () => {
       from: '5511999991111',
       message: 'Some message',
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: 'Some message',
+        },
+      }
     });
     expect(response).toMatchObject({
       id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
@@ -73,6 +78,11 @@ describe('MetaService', () => {
         from: '5511999991111',
         message: 'Some message',
         phoneNumberId: mockPhoneNumberId,
+        content: {
+          text: {
+            body: 'Some message',
+          },
+        }
       }),
     ).rejects.toThrow(new InternalServerErrorException('Internal Server Error'));
   });

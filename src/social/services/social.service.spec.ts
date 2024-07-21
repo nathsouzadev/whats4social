@@ -77,11 +77,21 @@ describe('SocialService', () => {
       message: '✅ Twet posted successfully',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '✅ Twet posted successfully',
+        },
+      }
     });
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: '✅ BSky posted successfully',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '✅ BSky posted successfully',
+        },
+      }
     });
     expect(response).toMatchObject({
       twitter: {
@@ -127,11 +137,21 @@ describe('SocialService', () => {
       message: '❌ Failed to post on Twitter!',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '❌ Failed to post on Twitter!',
+        },
+      }
     });
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: '✅ BSky posted successfully',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '✅ BSky posted successfully',
+        },
+      }
     });
     expect(response).toMatchObject({
       twitter: {
@@ -179,11 +199,21 @@ describe('SocialService', () => {
       message: '✅ Twet posted successfully',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '✅ Twet posted successfully',
+        },
+      }
     });
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
       message: '❌ Failed to post on Bluesky!',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: '❌ Failed to post on Bluesky!',
+        },
+      }
     });
     expect(response).toMatchObject({
       twitter: {
@@ -216,6 +246,11 @@ describe('SocialService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: mockMessage,
+        },
+      }
     });
   });
 
@@ -250,6 +285,11 @@ describe('SocialService', () => {
       message: 'Processing your posts',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: 'Processing your posts',
+        },
+      }
     });
     expect(service.whatsPost).toHaveBeenCalledWith(mockData);
   });
@@ -276,6 +316,11 @@ describe('SocialService', () => {
       message: 'Reply your test. Not posted on social!',
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      content: {
+        text: {
+          body: 'Reply your test. Not posted on social!',
+        },
+      }
     });
     expect(service.whatsPost).not.toHaveBeenCalled();
   });
