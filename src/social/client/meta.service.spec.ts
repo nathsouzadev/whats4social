@@ -65,6 +65,66 @@ describe('MetaService', () => {
     });
   });
 
+  it('should send button message', async () => {
+    const mockPhoneNumberId = '5511444412345';
+    nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
+      .post('')
+      .reply(200, {
+        messaging_product: 'whatsapp',
+        contacts: [
+          {
+            input: '5511999991111',
+            wa_id: '5511999991111',
+          },
+        ],
+        messages: [
+          {
+            id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+          },
+        ],
+      });
+
+    const response = await service.sendMessage({
+      from: '5511999991111',
+      message: 'Some message',
+      phoneNumberId: mockPhoneNumberId,
+      content: {
+        type: 'interactive',
+        recipient_type: 'individual',
+        interactive: {
+          type: 'button',
+          body: {
+            text: '🤗 Bem vinda ao Social Bank!',
+          },
+          footer: {
+            text: 'Social Bank é apenas uma demo de um sistema bancário disponível no WhatsApp. Desenvolvido por @nathsouzadev',
+          },
+          action: {
+            buttons: [
+              {
+                type: 'reply',
+                reply: {
+                  title: 'Ver saldo',
+                  id: 'balance',
+                },
+              },
+              {
+                type: 'reply',
+                reply: {
+                  title: 'Ver extrato',
+                  id: 'extract',
+                },
+              },
+            ],
+          },
+        },
+      }
+    });
+    expect(response).toMatchObject({
+      id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+    });
+  });
+
   it('should throw an error when message sending fails', async () => {
     nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
       .post('')

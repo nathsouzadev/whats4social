@@ -20,7 +20,7 @@ export class BankService {
             text: '🤗 Bem vinda ao Social Bank!',
           },
           footer: {
-            text: 'Social Bank é apenas uma demo de um sistema bancário disponível no WhatsApp. Desenvolvido por @nathsouzadev',
+            text: 'Social Bank é uma demo. Desenvolvido por @nathsouzadev',
           },
           action: {
             buttons: [
