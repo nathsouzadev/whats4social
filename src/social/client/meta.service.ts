@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { MessageModel } from '../model/whats-message.model';
 
 @Injectable()
 export class MetaService {
@@ -13,11 +14,7 @@ export class MetaService {
 
   constructor(private configService: ConfigService) {}
 
-  sendMessage = async (data: {
-    from: string;
-    message: string;
-    phoneNumberId: string;
-  }): Promise<{ id: string }> => {
+  sendMessage = async (data: MessageModel): Promise<{ id: string }> => {
     try {
       const response = await axios({
         method: 'POST',
@@ -29,7 +26,7 @@ export class MetaService {
         data: {
           messaging_product: 'whatsapp',
           to: data.from,
-          text: { body: 'Reply ' + data.message },
+          ...data.content
         },
       });
 
