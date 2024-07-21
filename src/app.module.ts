@@ -8,6 +8,7 @@ import { SocialModule } from './social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
 import { LoggerMiddleware } from './config/logger-middleware';
+import { BankModule } from './bank/bank.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LoggerMiddleware } from './config/logger-middleware';
     RouterModule.register(router),
     SocialModule,
     HealthModule,
+    BankModule,
   ],
 })
 export class AppModule implements NestModule {
