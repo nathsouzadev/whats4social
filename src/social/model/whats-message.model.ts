@@ -19,6 +19,7 @@ interface ButtonData {
 
 export interface ButtonContent {
   type: string; // 'interactive'
+  recipient_type: string; // 'individual'
   interactive: {
     type: string; // 'button'
     body: {

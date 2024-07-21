@@ -4,7 +4,7 @@ interface MockMetaMessage {
   sender: string;
   receiver: string;
   message: string;
-  type: 'message' | 'status';
+  type: 'message' | 'status' | 'button';
   phoneNumberId?: string;
 }
 
@@ -52,6 +52,32 @@ const messageTypes = {
       },
     ],
   }),
+  button: (data: MockMetaMessage) => ({
+    contacts: [
+      {
+        profile: {
+          name: 'NAME',
+        },
+        wa_id: data.receiver,
+      },
+    ],
+    messages: [
+      {
+        context: {
+          from: data.receiver,
+          id: 'wamid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjU1MzE4NTYxRjk5NzI1MkEyRgA=',
+        },
+        from: data.sender,
+        id: 'wamid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjU1MzE4NTYxRjk5NzI1MkEyRgA=',
+        timestamp: Date.now(),
+        type: 'button',
+        button: {
+          text: 'Action',
+          payload: 'button-payload',
+        },
+      },
+    ],
+  }),
 };
 
 export const mockMetaMessage = (data: MockMetaMessage): MetaMessageDTO => ({
@@ -63,15 +89,10 @@ export const mockMetaMessage = (data: MockMetaMessage): MetaMessageDTO => ({
         {
           value: {
             messaging_product: 'whatsapp',
-            metadata: Object.keys(data).includes('phoneNumberId')
-              ? {
-                  display_phone_number: data.receiver,
-                  phone_number_id: data.phoneNumberId,
-                }
-              : {
-                  display_phone_number: data.receiver,
-                  phone_number_id: '123456378901234',
-                },
+            metadata: {
+              display_phone_number: data.receiver,
+              phone_number_id: data.phoneNumberId ?? '123456378901234',
+            },
             ...messageTypes[data.type](data),
           },
           field: 'messages',

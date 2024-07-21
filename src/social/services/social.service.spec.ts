@@ -3,7 +3,6 @@ import { SocialService } from './social.service';
 import { TwitterService } from '../client/twitter.service';
 import { BSkyService } from '../client/bsky.service';
 import { MetaService } from '../client/meta.service';
-import { mock } from 'node:test';
 
 describe('SocialService', () => {
   let service: SocialService;
@@ -267,6 +266,7 @@ describe('SocialService', () => {
     const mockPhoneNumberId = '5511432112345';
     const mockContent = {
       type: 'interactive',
+      recipient_type: 'individual',
       interactive: {
         type: 'button',
         body: {
