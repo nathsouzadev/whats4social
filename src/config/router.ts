@@ -1,4 +1,3 @@
-import { ClerkModule } from '../clerk/clerk.module';
 import { HealthModule } from '../health/health.module';
 import { MessageModule } from '../message/message.module';
 import { SocialModule } from '../social/social.module';
@@ -15,10 +14,6 @@ export const router = [
         path: 'health',
         module: HealthModule,
       },
-      {
-        path: 'clerk',
-        module: ClerkModule
-      }
     ],
   },
   {

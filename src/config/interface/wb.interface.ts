@@ -3,4 +3,5 @@ export interface IWB {
   verifyToken: string;
   graphApiToken: string;
   phoneNumberId: string;
+  phoneNumber: string;
 }
