@@ -22,6 +22,22 @@ export class SocialService {
     phoneNumberId: string;
   }) => this.metaService.sendMessage(data);
 
+  private message = async (data: WhatsPostModel) => {
+    await this.metaService.sendMessage({
+      from: data.from,
+      message: data.message.toLowerCase() === 'test' ? 'Reply your test. Not posted on social!' : 'Processing your posts',
+      phoneNumberId: data.phoneNumberId,
+    });
+
+    if(data.message.toLowerCase() != 'test') this.whatsPost(data)
+  }
+
+  private bank = async (data: WhatsPostModel) => this.metaService.sendMessage({
+    from: data.from,
+    message: data.message,
+    phoneNumberId: data.phoneNumberId,
+  });
+
   webPost = async (
     message: string,
   ): Promise<{
@@ -77,12 +93,6 @@ export class SocialService {
   };
 
   replyToWhatsapp = async (data: WhatsPostModel): Promise<void> => {
-    await this.metaService.sendMessage({
-      from: data.from,
-      message: data.message.toLowerCase() === 'test' ? 'Reply your test. Not posted on social!' : 'Processing your posts',
-      phoneNumberId: data.phoneNumberId,
-    });
-
-    if(data.message.toLowerCase() != 'test') this.whatsPost(data)
+    await this[data.service](data);
   };
 }
