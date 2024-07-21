@@ -5,28 +5,28 @@ export interface MessageModel {
   content: TextContent | ButtonContent;
 }
 
-interface TextContent {
+export interface TextContent {
   text: { body: string };
 }
 
 interface ButtonData {
-  type: 'reply';
+  type: string; // 'reply'
   reply: {
     title: string;
     id: string;
   };
 }
 
-interface ButtonContent {
-  type: 'interactive';
+export interface ButtonContent {
+  type: string; // 'interactive'
   interactive: {
+    type: string; // 'button'
     body: {
       text: string;
     };
     footer: {
       text: string;
     };
-    type: 'button';
     action: {
       buttons: ButtonData[];
     };

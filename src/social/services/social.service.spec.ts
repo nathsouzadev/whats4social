@@ -3,6 +3,7 @@ import { SocialService } from './social.service';
 import { TwitterService } from '../client/twitter.service';
 import { BSkyService } from '../client/bsky.service';
 import { MetaService } from '../client/meta.service';
+import { mock } from 'node:test';
 
 describe('SocialService', () => {
   let service: SocialService;
@@ -225,7 +226,7 @@ describe('SocialService', () => {
     });
   });
 
-  it('should reply to a message via whatsapp with bank message', async () => {
+  it('should reply to a message via whatsapp with bank text message', async () => {
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
       Promise.resolve({
         id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
@@ -251,6 +252,63 @@ describe('SocialService', () => {
           body: mockMessage,
         },
       }
+    });
+  });
+
+  it('should reply to a message via whatsapp with bank button message', async () => {
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+
+    const mockMessage = '🤗 Bem vinda ao Social Bank!';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockContent = {
+      type: 'interactive',
+      interactive: {
+        type: 'button',
+        body: {
+          text: '🤗 Bem vinda ao Social Bank!',
+        },
+        footer: {
+          text: 'Social Bank é apenas uma demo de um sistema bancário disponível no WhatsApp. Desenvolvido por @nathsouzadev',
+        },
+        action: {
+          buttons: [
+            {
+              type: 'reply',
+              reply: {
+                title: 'Ver saldo',
+                id: 'balance',
+              },
+            },
+            {
+              type: 'reply',
+              reply: {
+                title: 'Ver extrato',
+                id: 'extract',
+              },
+            }
+          ]
+        }
+      }
+    }
+
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      service: 'bank',
+      content: mockContent,
+    };
+    await service.replyToWhatsapp(mockData);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      content: mockContent
     });
   });
 

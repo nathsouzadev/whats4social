@@ -25,6 +25,7 @@ export class SocialService {
       data.message.toLowerCase() === 'test'
         ? 'Reply your test. Not posted on social!'
         : 'Processing your posts';
+    
     await this.metaService.sendMessage({
       from: data.from,
       message: messageContent,
@@ -44,7 +45,7 @@ export class SocialService {
       from: data.from,
       message: data.message,
       phoneNumberId: data.phoneNumberId,
-      content: {
+      content: data.content ?? {
         text: {
           body: data.message,
         },

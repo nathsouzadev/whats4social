@@ -11,5 +11,35 @@ export class BankService {
       ...data,
       message: '🤗 Bem vinda ao Social Bank!',
       service: 'bank',
+      content: {
+        type: 'interactive',
+        interactive: {
+          type: 'button',
+          body: {
+            text: '🤗 Bem vinda ao Social Bank!',
+          },
+          footer: {
+            text: 'Social Bank é apenas uma demo de um sistema bancário disponível no WhatsApp. Desenvolvido por @nathsouzadev',
+          },
+          action: {
+            buttons: [
+              {
+                type: 'reply',
+                reply: {
+                  title: 'Ver saldo',
+                  id: 'balance',
+                },
+              },
+              {
+                type: 'reply',
+                reply: {
+                  title: 'Ver extrato',
+                  id: 'extract',
+                },
+              },
+            ],
+          },
+        },
+      },
     });
 }
