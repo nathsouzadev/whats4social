@@ -69,6 +69,7 @@ describe('SocialService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      service: 'message',
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
@@ -92,7 +93,7 @@ describe('SocialService', () => {
     });
   });
 
-  it('should complete bsky post if twitter post fail', async() => {
+  it('should complete bsky post if twitter post fail', async () => {
     jest.spyOn(service, 'webPost').mockImplementation(() =>
       Promise.resolve({
         twitter: {
@@ -118,6 +119,7 @@ describe('SocialService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      service: 'message',
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
@@ -139,9 +141,9 @@ describe('SocialService', () => {
         cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
       },
     });
-  })
+  });
 
-  it('should complete twitter post if bsky post fail', async() => {
+  it('should complete twitter post if bsky post fail', async () => {
     jest.spyOn(service, 'webPost').mockImplementation(() =>
       Promise.resolve({
         twitter: {
@@ -169,6 +171,7 @@ describe('SocialService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      service: 'message',
     };
     const response = await service.whatsPost(mockData);
     expect(service.webPost).toBeCalledWith(mockMessage);
@@ -190,7 +193,7 @@ describe('SocialService', () => {
         message: 'Failed to post!',
       },
     });
-  })
+  });
 
   it('should reply to a message via whatsapp with process info', async () => {
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
@@ -215,7 +218,8 @@ describe('SocialService', () => {
     const mockData = {
       message: mockMessage,
       from: mockFrom,
-      phoneNumberId: mockPhoneNumberId
+      phoneNumberId: mockPhoneNumberId,
+      service: 'message',
     };
     await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
@@ -232,7 +236,7 @@ describe('SocialService', () => {
         id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
       }),
     );
-    jest.spyOn(service, 'whatsPost')
+    jest.spyOn(service, 'whatsPost');
 
     const mockMessage = 'Test';
     const mockFrom = '5511444412345';
@@ -240,7 +244,8 @@ describe('SocialService', () => {
     const mockData = {
       message: mockMessage,
       from: mockFrom,
-      phoneNumberId: mockPhoneNumberId
+      phoneNumberId: mockPhoneNumberId,
+      service: 'message',
     };
     await service.replyToWhatsapp(mockData);
     expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
@@ -293,9 +298,11 @@ describe('SocialService', () => {
         },
       }),
     );
-    jest.spyOn(mockBSkyService, 'post').mockImplementation(() =>
-      Promise.reject(new Error('Failed to create post'))
-    );
+    jest
+      .spyOn(mockBSkyService, 'post')
+      .mockImplementation(() =>
+        Promise.reject(new Error('Failed to create post')),
+      );
 
     const response = await service.webPost('New tuite');
     expect(mockTwitterService.post).toBeCalledWith('New tuite');
@@ -312,12 +319,14 @@ describe('SocialService', () => {
         error: 'Error creating a new post',
       },
     });
-  })
+  });
 
   it('should create a bsky post, if twitter faild', async () => {
-    jest.spyOn(mockTwitterService, 'post').mockImplementation(() =>
-      Promise.reject(new Error('Failed to create post'))
-    );
+    jest
+      .spyOn(mockTwitterService, 'post')
+      .mockImplementation(() =>
+        Promise.reject(new Error('Failed to create post')),
+      );
     jest.spyOn(mockBSkyService, 'post').mockImplementation(() =>
       Promise.resolve({
         uri: 'at://did:plc:fpnfkdvsz3pcjkfeyltowzuk/app.bsky.feed.post/3krmxwxnkzo27',
@@ -338,5 +347,5 @@ describe('SocialService', () => {
         cid: 'bafyreiebo6vnunvzir2tgf3rr732j34ecmnrsz75fssjkugqu6yeoprfoq',
       },
     });
-  })
+  });
 });

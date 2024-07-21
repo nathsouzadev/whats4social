@@ -27,7 +27,10 @@ export class MessageService {
     from: string;
     message: string;
     phoneNumberId: string;
-  }) => this.socialService.replyToWhatsapp(data);
+  }) => this.socialService.replyToWhatsapp({
+    ...data,
+    service: 'message',
+  });
 
   handleMessage = async (data: WBPayloadEntry[]) => {
     if (Object.keys(data[0].changes[0].value).includes('messages')) {

@@ -56,7 +56,7 @@ describe('MessageService', () => {
       message: mockMessage,
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
-      valid: true,
+      service: 'message',
     };
 
     await service.reply(mockData);
@@ -74,7 +74,8 @@ describe('MessageService', () => {
     expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
       from: mockPhoneNumber,
       message: 'New post',
-      phoneNumberId: '123456789012345'
+      phoneNumberId: '123456789012345',
+      service: 'message',
     });
     expect(mockBankService.handle).not.toHaveBeenCalled();
   });
