@@ -94,9 +94,12 @@ describe('MessageService', () => {
   it('should reply from bankService', async () => {
     const mockData = mockMetaPayload('message').entry
 
-    jest.spyOn(mockBankService, 'handle').mockImplementation(() => 'Hello from BankService');
+    jest.spyOn(mockBankService, 'handle').mockImplementation(() => Promise.resolve(void 0));
 
     await service.handleMessage(mockData);
-    expect(mockBankService.handle).toHaveBeenCalled();
+    expect(mockBankService.handle).toHaveBeenCalledWith({
+      from: '5511999991234',
+      phoneNumberId: '123456789012345',
+    });
   })
 });

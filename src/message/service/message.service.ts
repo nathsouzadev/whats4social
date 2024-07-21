@@ -52,7 +52,10 @@ export class MessageService {
         return;
       }
 
-      this.bankService.handle();
+      this.bankService.handle({
+        from: message.from,
+        phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
+      });
     }
   };
 }

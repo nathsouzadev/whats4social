@@ -32,6 +32,12 @@ export class SocialService {
     if(data.message.toLowerCase() != 'test') this.whatsPost(data)
   }
 
+  private bank = async (data: WhatsPostModel) => this.metaService.sendMessage({
+    from: data.from,
+    message: data.message,
+    phoneNumberId: data.phoneNumberId,
+  });
+
   webPost = async (
     message: string,
   ): Promise<{

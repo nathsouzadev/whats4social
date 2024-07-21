@@ -195,6 +195,30 @@ describe('SocialService', () => {
     });
   });
 
+  it('should reply to a message via whatsapp with bank message', async () => {
+    jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
+      Promise.resolve({
+        id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
+      }),
+    );
+
+    const mockMessage = 'Bem vinda ao Social Bank!';
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      service: 'bank',
+    };
+    await service.replyToWhatsapp(mockData);
+    expect(mockMetaService.sendMessage).toHaveBeenCalledWith({
+      message: mockMessage,
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    });
+  });
+
   it('should reply to a message via whatsapp with process info', async () => {
     jest.spyOn(mockMetaService, 'sendMessage').mockImplementation(() =>
       Promise.resolve({

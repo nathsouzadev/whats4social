@@ -12,16 +12,34 @@ describe('BankService', () => {
         BankService,
         {
           provide: SocialService,
-          useValue: {},
+          useValue: {
+            replyToWhatsapp: jest.fn(),
+          },
         },
       ],
     }).compile();
 
     service = module.get<BankService>(BankService);
+    mockSocialService = module.get<SocialService>(SocialService);
   });
 
   it('should be reply from bank', async () => {
-    const response = service.handle();
-    expect(response).toBe('Hello from BankService');
+    jest
+      .spyOn(mockSocialService, 'replyToWhatsapp')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+    };
+    
+    await service.handle(mockData);
+    expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
+      ...mockData,
+      message: '🤗 Bem vinda ao Social Bank!',
+      service: 'bank',
+    });
   });
 });
