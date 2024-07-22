@@ -15,7 +15,7 @@ import { MetaMessageDTO } from './dto/meta-message.dto';
 @Controller()
 export class MessageController {
   private readonly logger = new Logger(MessageController.name);
-  
+
   constructor(private readonly messageService: MessageService) {}
 
   @ApiOkResponse({
@@ -25,13 +25,19 @@ export class MessageController {
   @HttpCode(200)
   async getHello(@Body() messageData: MetaMessageDTO) {
     const t0 = performance.now();
-    
+    this.logger.log(
+      JSON.stringify({
+        body: messageData,
+      }),
+    );
+
     await this.messageService.handleMessage(messageData.entry);
 
-    this.logger.log(JSON.stringify({
-      body: messageData,
-      time: performance.now() - t0,
-    }))
+    this.logger.log(
+      JSON.stringify({
+        time: performance.now() - t0,
+      }),
+    );
     return { message: 'ok' };
   }
 
