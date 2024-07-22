@@ -14,4 +14,5 @@ export const validationSchema = Joi.object({
   BSKY_IDENTIFIER: Joi.string().required(),
   BSKY_PASSWORD: Joi.string().required(),
   CLERK_WEBHOOK_SECRET: Joi.string().required(),
+  BANK_URL: Joi.string().required(),
 });

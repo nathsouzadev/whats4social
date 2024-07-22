@@ -46,7 +46,7 @@ describe('BankService', () => {
         interactive: {
           type: 'button',
           body: {
-            text: '🤗 Bem vinda ao Social Bank!',
+            text: '🤗 Bem vinda ao Social Bank! Como posso ajudar?',
           },
           footer: {
             text: 'Social Bank é uma demo. Desenvolvido por @nathsouzadev',
@@ -63,8 +63,15 @@ describe('BankService', () => {
               {
                 type: 'reply',
                 reply: {
-                  title: 'Ver extrato',
-                  id: 'extract',
+                  title: 'Transferência',
+                  id: 'transfer',
+                },
+              },
+              {
+                type: 'reply',
+                reply: {
+                  title: 'Fazer uma compra',
+                  id: 'purchase',
                 },
               },
             ],
