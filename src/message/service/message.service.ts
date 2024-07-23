@@ -34,12 +34,6 @@ export class MessageService {
     });
 
   handleMessage = async (data: WBPayloadEntry[]) => {
-    this.logger.log(
-      JSON.stringify({
-        body: data,
-      }),
-    );
-
     if (Object.keys(data[0].changes[0].value).includes('messages')) {
       const message = data[0].changes[0]?.value?.['messages'][0];
 
