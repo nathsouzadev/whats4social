@@ -1,12 +1,11 @@
-import { ButtonData } from '../../social/model/whats-message.model';
+import { ButtonData } from 'src/social/model/whats-message.model';
 
 const content = (data: {
   type: string;
   text: string;
-  footerText: string;
-  buttons: ButtonData[];
+  buttons?: ButtonData[];
 }) => {
-  const { type, text, footerText, buttons } = data;
+  const { type, text, buttons } = data;
 
   return {
     type,
@@ -14,13 +13,28 @@ const content = (data: {
     interactive: {
       type: 'button',
       body: {
-        text,
+        text: `${text} \nEscolha uma opção abaixo:`,
       },
       footer: {
-        text: footerText,
+        text: 'Social Bank é uma demo. Desenvolvido por @nathsouzadev',
       },
       action: {
-        buttons,
+        buttons: buttons ?? [
+          {
+            type: 'reply',
+            reply: {
+              title: 'Ver saldo',
+              id: 'balance',
+            },
+          },
+          {
+            type: 'reply',
+            reply: {
+              title: 'Fazer uma compra',
+              id: 'purchase',
+            },
+          },
+        ],
       },
     },
   };
@@ -29,30 +43,45 @@ const content = (data: {
 export const CONTENT_BODY = {
   WELLCOME: content({
     type: 'interactive',
-    text: '🤗 Bem vinda ao Social Bank! Como posso ajudar?',
-    footerText: 'Social Bank é uma demo. Desenvolvido por @nathsouzadev',
+    text: '🤗 Bem vinda ao Social Bank!',
+  }),
+  BALANCE: content({
+    type: 'interactive',
+    text: '💰💵 Seu saldo é de R$ 1000,00',
+  }),
+  PURCHASE: content({
+    type: 'interactive',
+    text: '🛒🛍️ O que deseja comprar?',
     buttons: [
       {
         type: 'reply',
         reply: {
-          title: 'Ver saldo',
-          id: 'balance',
+          title: '💻 PC R$ 2000.00',
+          id: 'refused',
         },
       },
       {
         type: 'reply',
         reply: {
-          title: 'Transferência',
-          id: 'transfer',
+          title: '🖥️ Monitor R$ 500.00',
+          id: 'completed',
         },
       },
       {
         type: 'reply',
         reply: {
-          title: 'Fazer uma compra',
-          id: 'purchase',
+          title: '🖲️ Mouse R$ 100.00',
+          id: 'completed',
         },
       },
     ],
+  }),
+  PURCHASE_COMPLETED: content({
+    type: 'interactive',
+    text: '🎉🎊 Compra realizada com sucesso!',
+  }),
+  PURCHASE_REFUSED: content({
+    type: 'interactive',
+    text: '❌🛒 Compra recusada!',
   }),
 };

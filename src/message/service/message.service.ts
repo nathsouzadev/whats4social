@@ -27,16 +27,24 @@ export class MessageService {
     from: string;
     message: string;
     phoneNumberId: string;
-  }) => this.socialService.replyToWhatsapp({
-    ...data,
-    service: 'message',
-  });
+  }) =>
+    this.socialService.replyToWhatsapp({
+      ...data,
+      service: 'message',
+    });
 
   handleMessage = async (data: WBPayloadEntry[]) => {
+    this.logger.log(
+      JSON.stringify({
+        body: data,
+      }),
+    );
+
     if (Object.keys(data[0].changes[0].value).includes('messages')) {
       const message = data[0].changes[0]?.value?.['messages'][0];
 
       if (
+        Object.keys(message).includes('text') &&
         this.validatePost({
           type: message?.type,
           phoneNumber: message.from,
@@ -55,6 +63,7 @@ export class MessageService {
       this.bankService.handle({
         from: message.from,
         phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
+        contentReply: message[message.type],
       });
     }
   };
