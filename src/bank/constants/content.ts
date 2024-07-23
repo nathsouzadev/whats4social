@@ -67,13 +67,6 @@ export const CONTENT_BODY = {
           id: 'completed',
         },
       },
-      {
-        type: 'reply',
-        reply: {
-          title: '🖲️ Mouse R$ 100.00',
-          id: 'completed',
-        },
-      },
     ],
   }),
   PURCHASE_COMPLETED: content({
