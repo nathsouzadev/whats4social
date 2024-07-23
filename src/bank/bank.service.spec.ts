@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BankService } from './bank.service';
 import { SocialService } from '../social/services/social.service';
+import { CONTENT_BODY } from './constants/content';
 
 describe('BankService', () => {
   let service: BankService;
@@ -33,6 +34,9 @@ describe('BankService', () => {
     const mockData = {
       from: mockFrom,
       phoneNumberId: mockPhoneNumberId,
+      contentReply: {
+        body: '/bank',
+      },
     };
 
     await service.handle(mockData);
@@ -40,37 +44,119 @@ describe('BankService', () => {
       ...mockData,
       message: '🤗 Bem vinda ao Social Bank!',
       service: 'bank',
-      content: {
-        type: 'interactive',
-        recipient_type: 'individual',
-        interactive: {
-          type: 'button',
-          body: {
-            text: '🤗 Bem vinda ao Social Bank!',
-          },
-          footer: {
-            text: 'Social Bank é uma demo. Desenvolvido por @nathsouzadev',
-          },
-          action: {
-            buttons: [
-              {
-                type: 'reply',
-                reply: {
-                  title: 'Ver saldo',
-                  id: 'balance',
-                },
-              },
-              {
-                type: 'reply',
-                reply: {
-                  title: 'Ver extrato',
-                  id: 'extract',
-                },
-              },
-            ],
-          },
+      content: CONTENT_BODY.WELLCOME,
+    });
+  });
+
+  it('should be reply with balance account', async () => {
+    jest
+      .spyOn(mockSocialService, 'replyToWhatsapp')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      contentReply: {
+        type: 'button_reply',
+        button_reply: {
+          id: 'balance',
+          title: 'Ver saldo',
         },
       },
+    };
+
+    await service.handle(mockData);
+    expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
+      ...mockData,
+      message: 'Seu saldo é de R$ 1000,00',
+      service: 'bank',
+      content: CONTENT_BODY.BALANCE,
+    });
+  });
+
+  it('should be reply with purchase options', async () => {
+    jest
+      .spyOn(mockSocialService, 'replyToWhatsapp')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      contentReply: {
+        type: 'button_reply',
+        button_reply: {
+          id: 'purchase',
+          title: 'Fazer uma compra',
+        },
+      },
+    };
+
+    await service.handle(mockData);
+    expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
+      ...mockData,
+      message: 'Escolha um item que deseja comprar',
+      service: 'bank',
+      content: CONTENT_BODY.PURCHASE,
+    });
+  });
+
+  it('should be reply with completed options', async () => {
+    jest
+      .spyOn(mockSocialService, 'replyToWhatsapp')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      contentReply: {
+        type: 'button_reply',
+        button_reply: {
+          id: 'completed',
+          title: '🖥️ Monitor R$ 500.00',
+        },
+      },
+    };
+
+    await service.handle(mockData);
+    expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
+      ...mockData,
+      message: 'Compra realizada com sucesso',
+      service: 'bank',
+      content: CONTENT_BODY.PURCHASE_COMPLETED,
+    });
+  });
+
+  it('should be reply with refused options', async () => {
+    jest
+      .spyOn(mockSocialService, 'replyToWhatsapp')
+      .mockImplementation(() => Promise.resolve(void 0));
+
+    const mockFrom = '5511444412345';
+    const mockPhoneNumberId = '5511432112345';
+    const mockData = {
+      from: mockFrom,
+      phoneNumberId: mockPhoneNumberId,
+      contentReply: {
+        type: 'button_reply',
+        button_reply: {
+          id: 'refused',
+          title: '💻 PC R$ 2000.00',
+        },
+      },
+    };
+
+    await service.handle(mockData);
+    expect(mockSocialService.replyToWhatsapp).toHaveBeenCalledWith({
+      ...mockData,
+      message: 'Compra recusada',
+      service: 'bank',
+      content: CONTENT_BODY.PURCHASE_REFUSED,
     });
   });
 });

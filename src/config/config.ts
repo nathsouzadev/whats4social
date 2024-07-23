@@ -22,5 +22,8 @@ export default (): IConfig => ({
   },
   clerk: {
     webhookSecret: process.env.CLERK_WEBHOOK_SECRET,
-  }
+  },
+  bank: {
+    url: process.env.BANK_URL,
+  },
 });

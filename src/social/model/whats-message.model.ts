@@ -9,7 +9,7 @@ export interface TextContent {
   text: { body: string };
 }
 
-interface ButtonData {
+export interface ButtonData {
   type: string; // 'reply'
   reply: {
     title: string;
