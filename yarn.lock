@@ -377,54 +377,55 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@clerk/backend@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.3.1.tgz#7fe75dba9b4baa3f0154bf2038ec0b66bd654b7a"
-  integrity sha512-6/gaj9lDovtBpj+abK4XCNsoLvRmf2IcOAf+tcEGt9ngx5YeUavWoHTWL0jX4wsxXUzUW7GqKAswJJxIlvP1PA==
+"@clerk/backend@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.4.3.tgz#2f734b86294b6479c0b29d551e39fb7e6772e6ca"
+  integrity sha512-wj4qsZO6iNiY9vF7vLH5v1f3oLh1yCLgFa0PedLzJAIJgepZl23C1/ubrRm7vyewjQEMHZwod4816mZlHDfoqA==
   dependencies:
-    "@clerk/shared" "2.3.2"
-    "@clerk/types" "4.7.0"
+    "@clerk/shared" "2.4.1"
+    "@clerk/types" "4.9.1"
     cookie "0.5.0"
     snakecase-keys "5.4.4"
     tslib "2.4.1"
 
-"@clerk/clerk-react@5.2.7":
-  version "5.2.7"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.2.7.tgz#423755386ff1c589fefc1987adee054d32fa42eb"
-  integrity sha512-8gPS/N0D1ooGg92lrSsAN9nKZEVE1b/nfZGtgEZX9epQ47nD+geThAC1G+mc3hABNkIODvIyecKTLbsk0K+LfA==
+"@clerk/clerk-react@5.2.10":
+  version "5.2.10"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.2.10.tgz#1590771cbc80bf89af87b073d70f6456c1e2f9b2"
+  integrity sha512-qJZ79aiB80cUuqccKqhk6QImGIji4y1bjK1xbGnqiAthtMegxFShLJwEsrF7nl0Rw5yM9cphiwETEqBWfIPL4Q==
   dependencies:
-    "@clerk/shared" "2.3.2"
-    "@clerk/types" "4.7.0"
+    "@clerk/shared" "2.4.1"
+    "@clerk/types" "4.9.1"
     tslib "2.4.1"
 
-"@clerk/nextjs@^5.2.3":
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-5.2.3.tgz#2ba2998ad364ca385de4c981e6f0e999242308a2"
-  integrity sha512-BRZ50sS3SWWUu8RqAdEaWD6Ib6EIpJ91BZuvGyn/dkXLU096W3hhwQInAe6CA3GrvxKIwLqUMgO7Ahof4OR/xA==
+"@clerk/nextjs@^5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-5.2.8.tgz#c70618e3df9290e9d969383773b5887798d8a4b0"
+  integrity sha512-dy4K1e2ygWBsDjnLmQKtoeRpoToCNFRXMu6GN4VesE9/mOYNXKiyJE2/DY6lGV3oR2f8Qr9YjcXzphRnf1d/OQ==
   dependencies:
-    "@clerk/backend" "1.3.1"
-    "@clerk/clerk-react" "5.2.7"
-    "@clerk/shared" "2.3.2"
-    "@clerk/types" "4.7.0"
+    "@clerk/backend" "1.4.3"
+    "@clerk/clerk-react" "5.2.10"
+    "@clerk/shared" "2.4.1"
+    "@clerk/types" "4.9.1"
     crypto-js "4.2.0"
     path-to-regexp "6.2.2"
+    server-only "0.0.1"
     tslib "2.4.1"
 
-"@clerk/shared@2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-2.3.2.tgz#141eb34636d7962bfcce89ccc77b0470c9d3652d"
-  integrity sha512-uOTYqSmxe41Ye8TnyPtthwLp5rrYK5Ze04bvl1SQzlIibr4qeLU2DXZOYibMnSWvIMwr45pXUHsJh8NfKKIZ2w==
+"@clerk/shared@2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-2.4.1.tgz#838d6ab2322f97eba9364a6a984055161a5b926b"
+  integrity sha512-sApuz6hDRIai4Jwo/fBcihX74+DdrKLt08LkEVrooh/7zc0ipDOSGlqmAy15yNuKPaxpemp/9nW4T8gq6uIr9Q==
   dependencies:
-    "@clerk/types" "4.7.0"
+    "@clerk/types" "4.9.1"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
     std-env "^3.7.0"
     swr "^2.2.0"
 
-"@clerk/types@4.7.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.7.0.tgz#8aacc4f449cd0ea7cca1cb7f31eaab41e046ed73"
-  integrity sha512-Gg4zEZLE7wgByMhgHMU69tkIEwfiFKNSbtRwdtAwrW+Pg0blpVpw7XuN0wHNAYFM2COrrKEUaGt8KWZmmdTFbg==
+"@clerk/types@4.9.1":
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.9.1.tgz#9fddc160fdc729caa71bdacce717b99af01fda2c"
+  integrity sha512-fCmqzPBFh0rH9TlUVPpvPW225DtGJDuCv5GecwuuzD8hcgwGetTfRSDRNl5Dub5aJuqYWGQQCCnKfnfCrhZvrA==
   dependencies:
     csstype "3.1.1"
 
@@ -4780,6 +4781,11 @@ serve-static@1.15.0:
     escape-html "~1.0.3"
     parseurl "~1.3.3"
     send "0.18.0"
+
+server-only@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/server-only/-/server-only-0.0.1.tgz#0f366bb6afb618c37c9255a314535dc412cd1c9e"
+  integrity sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==
 
 set-function-length@^1.2.1:
   version "1.2.2"
