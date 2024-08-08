@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@atproto/api": "^0.12.24",
+    "@atproto/api": "^0.12.29",
     "@clerk/nextjs": "^5.2.12",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^9.0.0",

@@ -50,10 +50,10 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@atproto/api@^0.12.24":
-  version "0.12.24"
-  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.12.24.tgz#327375f40cb6872f25c608949a338d5051b90a01"
-  integrity sha512-b6vuRd1h2pNCNWrc511k+37FGi2YLDsSsCWcCOJ430cHLPr1DFBHJYIc3wy1biG6AG7Ijkcr2aNDzwjaB0nubA==
+"@atproto/api@^0.12.29":
+  version "0.12.29"
+  resolved "https://registry.yarnpkg.com/@atproto/api/-/api-0.12.29.tgz#95a19202c2f0eec4c955909685be11009ba9b9a1"
+  integrity sha512-PyzPLjGWR0qNOMrmj3Nt3N5NuuANSgOk/33Bu3j+rFjjPrHvk9CI6iQPU6zuDaDCoyOTRJRafw8X/aMQw+ilgw==
   dependencies:
     "@atproto/common-web" "^0.3.0"
     "@atproto/lexicon" "^0.4.0"
