@@ -5,7 +5,7 @@ import {
   CreateTweet,
   AccountSettings,
 } from 'twitter-api-client';
-import { SocialError } from '../model/social-midia-response-error.model';
+import { SocialError } from './model/social-midia-response-error.model';
 
 @Injectable()
 export class TwitterService {

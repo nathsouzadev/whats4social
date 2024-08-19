@@ -9,6 +9,7 @@ describe('WBPayloadToMessageWireIn', () => {
       from: '5511999991234',
       message: 'New post',
       phoneNumberId: '123456789012345',
+      type: 'text',
     });
   });
 });

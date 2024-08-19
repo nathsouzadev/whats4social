@@ -4,11 +4,10 @@ import { RouterModule } from '@nestjs/core';
 import { router } from './config/router';
 import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from './config/interface/config.schema';
-import { SocialModule } from './resources/clients/social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
 import { LoggerMiddleware } from './config/logger-middleware';
-import { BankModule } from './bank/bank.module';
+import { SocialModule } from './resources/domain/social/social.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { BankModule } from './bank/bank.module';
     RouterModule.register(router),
     SocialModule,
     HealthModule,
-    BankModule,
   ],
 })
 export class AppModule implements NestModule {

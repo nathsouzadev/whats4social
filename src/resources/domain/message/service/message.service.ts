@@ -1,9 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { SocialService } from '../../../clients/social/services/social.service';
-import { WBPayloadEntry } from '../models/meta-message.model';
 import { ConfigService } from '@nestjs/config';
-import { BankService } from '../../../../bank/bank.service';
 import { MessageWireIn } from '../models/message.wire-in.model';
+import { SocialService } from '../../social/services/social.service';
 
 @Injectable()
 export class MessageService {
@@ -12,7 +10,6 @@ export class MessageService {
   constructor(
     private configService: ConfigService,
     private readonly socialService: SocialService,
-    private readonly bankService: BankService,
   ) {}
 
   private validatePost = (data: {
@@ -50,12 +47,6 @@ export class MessageService {
           phoneNumberId: phoneNumberId,
         });
       }
-  
-      // this.bankService.handle({
-      //   from: message.from,
-      //   phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
-      //   contentReply: message[message.type],
-      // });
     } catch (error) {
       return;
     }

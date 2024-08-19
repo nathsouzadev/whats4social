@@ -1,15 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageService } from './message.service';
-import { SocialService } from '../../../clients/social/services/social.service';
+import { SocialService } from '../../social/services/social.service';
 import { mockMetaPayload } from '../../../../__mocks__/meta-message.mock';
 import { ConfigService } from '@nestjs/config';
-import { BankService } from '../../../../bank/bank.service';
 import { WBPayloadToMessageWireIn } from '../adapters/message.wire-in';
 
 describe('MessageService', () => {
   let service: MessageService;
   let mockSocialService: SocialService;
-  let mockBankService: BankService;
 
   const mockPhoneNumber = '5521880881234';
 
@@ -29,18 +27,11 @@ describe('MessageService', () => {
             get: jest.fn().mockReturnValue(mockPhoneNumber),
           },
         },
-        {
-          provide: BankService,
-          useValue: {
-            handle: jest.fn(),
-          },
-        },
       ],
     }).compile();
 
     service = module.get<MessageService>(MessageService);
     mockSocialService = module.get<SocialService>(SocialService);
-    mockBankService = module.get<BankService>(BankService);
   });
 
   it('should reply message', async () => {
@@ -76,7 +67,6 @@ describe('MessageService', () => {
       phoneNumberId: '123456789012345',
       service: 'message',
     });
-    expect(mockBankService.handle).not.toHaveBeenCalled();
   });
 
   it('should not reply message with type different from text', async () => {
@@ -88,22 +78,5 @@ describe('MessageService', () => {
 
     await service.handleMessage(mockData);
     expect(mockSocialService.replyToWhatsapp).not.toHaveBeenCalled();
-  });
-
-  it.skip('should reply from bankService', async () => {
-    const mockData = WBPayloadToMessageWireIn(mockMetaPayload('message').entry);
-
-    jest
-      .spyOn(mockBankService, 'handle')
-      .mockImplementation(() => Promise.resolve(void 0));
-
-    await service.handleMessage(mockData);
-    expect(mockBankService.handle).toHaveBeenCalledWith({
-      from: '5511999991234',
-      phoneNumberId: '123456789012345',
-      contentReply: {
-        body: 'New post'
-      }
-    });
   });
 });

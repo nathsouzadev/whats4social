@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SocialService } from './social.service';
-import { TwitterService } from '../client/twitter.service';
-import { BSkyService } from '../client/bsky.service';
-import { MetaService } from '../client/meta.service';
+import { TwitterService } from '../../../client/twitter.service';
+import { BSkyService } from '../../../client/bsky.service';
+import { MetaService } from '../../../client/meta.service';
 
 describe('SocialService', () => {
   let service: SocialService;

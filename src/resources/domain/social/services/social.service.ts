@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { TwitterService } from '../client/twitter.service';
-import { BSkyService } from '../client/bsky.service';
-import { MetaService } from '../client/meta.service';
+import { TwitterService } from '../../../client/twitter.service';
+import { BSkyService } from '../../../client/bsky.service';
+import { MetaService } from '../../../client/meta.service';
 import { CreateTweet } from 'twitter-api-client';
-import { BskyResponse } from '../model/bsky-response.model';
-import { SocialError } from '../model/social-midia-response-error.model';
-import { WhatsPostResponseModel } from '../model/whats-post-response.model';
-import { WhatsPostModel } from '../model/whats-post.model';
-import { MessageModel } from '../model/whats-message.model';
+import { MessageModel } from '../../../client/model/whats-message.model';
+import { WhatsPostModel } from '../../../client/model/whats-post.model';
+import { SocialError } from '../../../client/model/social-midia-response-error.model';
+import { BskyResponse } from '../../../client/model/bsky-response.model';
+import { WhatsPostResponseModel } from '../../../client/model/whats-post-response.model';
 
 @Injectable()
 export class SocialService {
