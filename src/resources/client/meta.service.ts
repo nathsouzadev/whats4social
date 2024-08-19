@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import { MessageModel } from '../model/whats-message.model';
+import { MessageModel } from './model/whats-message.model';
 
 @Injectable()
 export class MetaService {

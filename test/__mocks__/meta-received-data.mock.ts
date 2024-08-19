@@ -1,4 +1,4 @@
-import { MetaMessageDTO } from '../../src/message/dto/meta-message.dto';
+import { MetaMessageDTO } from '../../src/resources/domain/message/dto/meta-message.dto';
 
 interface MockMetaMessage {
   sender: string;

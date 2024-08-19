@@ -1,6 +1,6 @@
+import { SocialModule } from '../resources/domain/social/social.module';
 import { HealthModule } from '../health/health.module';
-import { MessageModule } from '../message/message.module';
-import { SocialModule } from '../social/social.module';
+import { MessageModule } from '../resources/domain/message/message.module';
 
 export const router = [
   {

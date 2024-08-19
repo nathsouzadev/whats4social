@@ -1,8 +1,8 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BskyAgent, ComAtprotoServerCreateSession } from '@atproto/api';
-import { BskyResponse } from '../model/bsky-response.model';
-import { SocialError } from '../model/social-midia-response-error.model';
+import { BskyResponse } from './model/bsky-response.model';
+import { SocialError } from './model/social-midia-response-error.model';
 
 @Injectable()
 export class BSkyService {
