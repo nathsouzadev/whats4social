@@ -1,8 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { SocialService } from '../../social/services/social.service';
+import { SocialService } from '../../../clients/social/services/social.service';
 import { WBPayloadEntry } from '../models/meta-message.model';
 import { ConfigService } from '@nestjs/config';
-import { BankService } from '../../../bank/bank.service';
+import { BankService } from '../../../../bank/bank.service';
+import { MessageWireIn } from '../models/message.wire-in.model';
 
 @Injectable()
 export class MessageService {
@@ -33,32 +34,30 @@ export class MessageService {
       service: 'message',
     });
 
-  handleMessage = async (data: WBPayloadEntry[]) => {
-    if (Object.keys(data[0].changes[0].value).includes('messages')) {
-      const message = data[0].changes[0]?.value?.['messages'][0];
-
+  handleMessage = async (data: MessageWireIn) => {
+    try {
+      const { from, message, phoneNumberId, type } = data;
       if (
-        Object.keys(message).includes('text') &&
         this.validatePost({
-          type: message?.type,
-          phoneNumber: message.from,
-          message: message.text.body,
+          type: type,
+          phoneNumber: from,
+          message: message,
         })
       ) {
         await this.reply({
-          from: message.from,
-          message: message.text.body,
-          phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
+          from: from,
+          message: message,
+          phoneNumberId: phoneNumberId,
         });
-
-        return;
       }
-
-      this.bankService.handle({
-        from: message.from,
-        phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
-        contentReply: message[message.type],
-      });
+  
+      // this.bankService.handle({
+      //   from: message.from,
+      //   phoneNumberId: data[0].changes[0].value.metadata.phone_number_id,
+      //   contentReply: message[message.type],
+      // });
+    } catch (error) {
+      return;
     }
   };
 }

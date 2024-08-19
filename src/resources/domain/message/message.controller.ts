@@ -11,6 +11,7 @@ import {
 import { ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { MessageService } from './service/message.service';
 import { MetaMessageDTO } from './dto/meta-message.dto';
+import { WBPayloadToMessageWireIn } from './adapters/message.wire-in';
 
 @Controller()
 export class MessageController {
@@ -26,7 +27,9 @@ export class MessageController {
   async getHello(@Body() messageData: MetaMessageDTO) {
     const t0 = performance.now();
 
-    await this.messageService.handleMessage(messageData.entry);
+    await this.messageService.handleMessage(
+      WBPayloadToMessageWireIn(messageData.entry),
+    );
 
     this.logger.log(
       JSON.stringify({

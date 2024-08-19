@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MessageService } from './service/message.service';
 import { MessageController } from './message.controller';
-import { TwitterService } from '../social/client/twitter.service';
-import { BSkyService } from '../social/client/bsky.service';
-import { MetaService } from '../social/client/meta.service';
-import { SocialService } from '../social/services/social.service';
-import { BankService } from '../../bank/bank.service';
+import { TwitterService } from '../../clients/social/client/twitter.service';
+import { BSkyService } from '../../clients/social/client/bsky.service';
+import { MetaService } from '../../clients/social/client/meta.service';
+import { SocialService } from '../../clients/social/services/social.service';
+import { BankService } from '../../../bank/bank.service';
 
 @Module({
   controllers: [MessageController],

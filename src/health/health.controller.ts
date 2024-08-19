@@ -4,10 +4,10 @@ import {
   HealthCheckService,
   HealthIndicatorResult,
 } from '@nestjs/terminus';
-import { TwitterService } from '../resources/social/client/twitter.service';
+import { TwitterService } from '../resources/clients/social/client/twitter.service';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { MetaService } from '../resources/social/client/meta.service';
-import { BSkyService } from '../resources/social/client/bsky.service';
+import { MetaService } from '../resources/clients/social/client/meta.service';
+import { BSkyService } from '../resources/clients/social/client/bsky.service';
 
 @Controller()
 export class HealthController {

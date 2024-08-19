@@ -1,10 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { MessageModule } from './resources/message/message.module';
+import { MessageModule } from './resources/domain/message/message.module';
 import { RouterModule } from '@nestjs/core';
 import { router } from './config/router';
 import { ConfigModule } from '@nestjs/config';
 import { validationSchema } from './config/interface/config.schema';
-import { SocialModule } from './resources/social/social.module';
+import { SocialModule } from './resources/clients/social/social.module';
 import { HealthModule } from './health/health.module';
 import config from './config/config';
 import { LoggerMiddleware } from './config/logger-middleware';
