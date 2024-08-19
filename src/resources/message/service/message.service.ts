@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { SocialService } from '../../social/services/social.service';
 import { WBPayloadEntry } from '../models/meta-message.model';
 import { ConfigService } from '@nestjs/config';
-import { BankService } from '../../bank/bank.service';
+import { BankService } from '../../../bank/bank.service';
 
 @Injectable()
 export class MessageService {

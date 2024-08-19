@@ -1,4 +1,4 @@
-import { ButtonData } from 'src/social/model/whats-message.model';
+import { ButtonData } from 'src/resources/social/model/whats-message.model';
 
 const content = (data: {
   type: string;

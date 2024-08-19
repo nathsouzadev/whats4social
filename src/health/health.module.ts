@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
 import { HttpModule } from '@nestjs/axios';
 import { HealthController } from './health.controller';
-import { TwitterService } from '../social/client/twitter.service';
-import { BSkyService } from '../social/client/bsky.service';
-import { MetaService } from '../social/client/meta.service';
+import { TwitterService } from '../resources/social/client/twitter.service';
+import { BSkyService } from '../resources/social/client/bsky.service';
+import { MetaService } from '../resources/social/client/meta.service';
 
 @Module({
   imports: [TerminusModule, HttpModule],

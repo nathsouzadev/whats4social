@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageService } from './message.service';
 import { SocialService } from '../../social/services/social.service';
-import { mockMetaPayload } from '../../__mocks__/meta-message.mock';
+import { mockMetaPayload } from '../../../__mocks__/meta-message.mock';
 import { ConfigService } from '@nestjs/config';
-import { BankService } from '../../bank/bank.service';
+import { BankService } from '../../../bank/bank.service';
 
 describe('MessageService', () => {
   let service: MessageService;

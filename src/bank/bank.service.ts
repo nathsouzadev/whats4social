@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SocialService } from '../social/services/social.service';
+import { SocialService } from '../resources/social/services/social.service';
 import { BankMessageModel } from './model/message.model';
 import { CONTENT_BODY } from './constants/content';
 

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BankService } from './bank.service';
-import { SocialService } from '../social/services/social.service';
+import { SocialService } from '../resources/social/services/social.service';
 import { CONTENT_BODY } from './constants/content';
 
 describe('BankService', () => {

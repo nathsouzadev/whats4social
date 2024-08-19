@@ -5,7 +5,7 @@ import { TwitterService } from '../social/client/twitter.service';
 import { BSkyService } from '../social/client/bsky.service';
 import { MetaService } from '../social/client/meta.service';
 import { SocialService } from '../social/services/social.service';
-import { BankService } from '../bank/bank.service';
+import { BankService } from '../../bank/bank.service';
 
 @Module({
   controllers: [MessageController],

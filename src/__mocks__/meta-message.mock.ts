@@ -1,4 +1,4 @@
-import { MetaPayload } from '../message/models/meta-message.model'
+import { MetaPayload } from '../resources/message/models/meta-message.model'
 
 export const mockEntry = [
     {

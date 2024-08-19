@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { BankService } from './bank.service';
-import { SocialService } from '../social/services/social.service';
-import { BSkyService } from '../social/client/bsky.service';
-import { MetaService } from '../social/client/meta.service';
-import { TwitterService } from '../social/client/twitter.service';
+import { SocialService } from '../resources/social/services/social.service';
+import { BSkyService } from '../resources/social/client/bsky.service';
+import { MetaService } from '../resources/social/client/meta.service';
+import { TwitterService } from '../resources/social/client/twitter.service';
 
 @Module({
   providers: [
