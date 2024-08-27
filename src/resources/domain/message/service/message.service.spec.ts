@@ -4,10 +4,12 @@ import { SocialService } from '../../social/services/social.service';
 import { mockMetaPayload } from '../../../../__mocks__/meta-message.mock';
 import { ConfigService } from '@nestjs/config';
 import { WBPayloadToMessageWireIn } from '../adapters/message.wire-in';
+import { AudioService } from '../../audio/audio.service';
 
 describe('MessageService', () => {
   let service: MessageService;
   let mockSocialService: SocialService;
+  let mockAudioService: AudioService;
 
   const mockPhoneNumber = '5521880881234';
 
@@ -27,11 +29,18 @@ describe('MessageService', () => {
             get: jest.fn().mockReturnValue(mockPhoneNumber),
           },
         },
+        {
+          provide: AudioService,
+          useValue: {
+            get: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     service = module.get<MessageService>(MessageService);
     mockSocialService = module.get<SocialService>(SocialService);
+    mockAudioService = module.get<AudioService>(AudioService);
   });
 
   it('should reply message', async () => {
@@ -54,7 +63,9 @@ describe('MessageService', () => {
   });
 
   it('should reply message with valid true', async () => {
-    const mockData = WBPayloadToMessageWireIn(mockMetaPayload('message', mockPhoneNumber).entry);
+    const mockData = WBPayloadToMessageWireIn(
+      mockMetaPayload('message', mockPhoneNumber).entry,
+    );
 
     jest
       .spyOn(mockSocialService, 'replyToWhatsapp')
@@ -78,5 +89,14 @@ describe('MessageService', () => {
 
     await service.handleMessage(mockData);
     expect(mockSocialService.replyToWhatsapp).not.toHaveBeenCalled();
+  });
+
+  it('should redirect to audio service', async () => {
+    const mockData = WBPayloadToMessageWireIn(
+      mockMetaPayload('audio', mockPhoneNumber).entry,
+    );
+
+    await service.handleMessage(mockData);
+    expect(mockAudioService.get).toHaveBeenCalledWith('1898677717865005');
   });
 });

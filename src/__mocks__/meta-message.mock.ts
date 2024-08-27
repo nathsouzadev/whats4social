@@ -86,6 +86,25 @@ const messageTypes = {
       },
     ],
   }),
+  audio: (phoneNumber: string) => ({
+    contacts: [
+      { profile: { name: 'Ada Lovelace' }, wa_id: phoneNumber },
+    ],
+    messages: [
+      {
+        from: phoneNumber,
+        id: 'wamid.HBgNNTUxMTk5MDExNjU1NRUCABIYFsWEQjA2QzEzMzM4QzhEMTFFRDgyNjkA',
+        timestamp: 1714873932,
+        type: 'audio',
+        audio: {
+          mime_type: 'audio/ogg; codecs=opus',
+          sha256: '4sg3Rvy9WL481ccRPYib34kWIGwqGD5FegJYgytDCCE=',
+          id: '1898677717865005',
+          voice: true,
+        },
+      },
+    ],
+  })
 }
 
 export const mockMetaPayload = (type: string, phoneNumber = '5511999991234'): MetaPayload => ({

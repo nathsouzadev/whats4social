@@ -58,7 +58,7 @@ describe('MetaService', () => {
         text: {
           body: 'Some message',
         },
-      }
+      },
     });
     expect(response).toMatchObject({
       id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
@@ -118,7 +118,7 @@ describe('MetaService', () => {
             ],
           },
         },
-      }
+      },
     });
     expect(response).toMatchObject({
       id: 'amid.HBgNNTUxMTk5MDExNjU1NRUCABEYEjdFRkNERTk5NjQ5OUJCMDk0MAA=',
@@ -126,12 +126,10 @@ describe('MetaService', () => {
   });
 
   it('should throw an error when message sending fails', async () => {
-    nock(`${mockUrl}/${mockPhoneNumberId}/messages`)
-      .post('')
-      .replyWithError({
-        statusCode: 500,
-        error: 'Internal Server Error',
-      });
+    nock(`${mockUrl}/${mockPhoneNumberId}/messages`).post('').replyWithError({
+      statusCode: 500,
+      error: 'Internal Server Error',
+    });
 
     await expect(
       service.sendMessage({
@@ -142,9 +140,11 @@ describe('MetaService', () => {
           text: {
             body: 'Some message',
           },
-        }
+        },
       }),
-    ).rejects.toThrow(new InternalServerErrorException('Internal Server Error'));
+    ).rejects.toThrow(
+      new InternalServerErrorException('Internal Server Error'),
+    );
   });
 
   it('should check health', async () => {
@@ -183,8 +183,29 @@ describe('MetaService', () => {
         });
 
       await expect(service.health()).rejects.toThrow(
-        new InternalServerErrorException(`Blocked ${entity} ${mockPhoneNumberId}`),
+        new InternalServerErrorException(
+          `Blocked ${entity} ${mockPhoneNumberId}`,
+        ),
       );
     }
+  });
+
+  it('should get audio url', async () => {
+    const mockAudioId = '1898677717265005';
+    const mockAudioUrl = 'https://someUrl.com/audio'
+    nock(`${mockUrl}/${mockAudioId}`).get('').reply(200, {
+      url: mockAudioUrl,
+      mime_type: 'audio/ogg',
+      sha256:
+        'e2c83746fcbd58be3cd5c3453d889bdf8916206c2a183e457a0258832b434921',
+      file_size: 3741,
+      id: '1898678327265005',
+      messaging_product: 'whatsapp',
+    });
+
+    const response = await service.getAudioUrl(mockAudioId);
+    expect(response).toMatchObject({
+      url: mockAudioUrl,
+    });
   });
 });

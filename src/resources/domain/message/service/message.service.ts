@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MessageWireIn } from '../models/message.wire-in.model';
 import { SocialService } from '../../social/services/social.service';
+import { AudioService } from '../../audio/audio.service';
 
 @Injectable()
 export class MessageService {
@@ -10,6 +11,7 @@ export class MessageService {
   constructor(
     private configService: ConfigService,
     private readonly socialService: SocialService,
+    private readonly audioService: AudioService,
   ) {}
 
   private validatePost = (data: {
@@ -31,9 +33,15 @@ export class MessageService {
       service: 'message',
     });
 
-  handleMessage = async (data: MessageWireIn) => {
+  handleMessage = async (data: MessageWireIn): Promise<void> => {
     try {
       const { from, message, phoneNumberId, type } = data;
+
+      if (type !== 'text') {
+        this.audioService.get(message);
+        return;
+      }
+
       if (
         this.validatePost({
           type: type,

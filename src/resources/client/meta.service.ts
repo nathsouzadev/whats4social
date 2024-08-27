@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { MessageModel } from './model/whats-message.model';
@@ -26,7 +30,7 @@ export class MetaService {
         data: {
           messaging_product: 'whatsapp',
           to: data.from,
-          ...data.content
+          ...data.content,
         },
       });
 
@@ -34,7 +38,7 @@ export class MetaService {
       return response.data.messages[0];
     } catch (error) {
       this.logger.error(error.message);
-      throw new InternalServerErrorException(error.message)
+      throw new InternalServerErrorException(error.message);
     }
   };
 
@@ -57,11 +61,31 @@ export class MetaService {
             entity.can_send_message === 'BLOCKED')
         ) {
           this.logger.error(`Blocked ${entity.entity_type} ${entity.id}`);
-          throw new InternalServerErrorException(`Blocked ${entity.entity_type} ${entity.id}`);
+          throw new InternalServerErrorException(
+            `Blocked ${entity.entity_type} ${entity.id}`,
+          );
         }
       });
 
       return { status: 'OK' };
+    } catch (error) {
+      this.logger.error(error.message);
+      throw new InternalServerErrorException(error.message);
+    }
+  };
+
+  getAudioUrl = async (audioId: string): Promise<{ url: string }> => {
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${this.url}/${audioId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      return { url: response.data.url };
     } catch (error) {
       this.logger.error(error.message);
       throw new InternalServerErrorException(error.message);
