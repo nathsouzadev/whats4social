@@ -4,4 +4,5 @@ export interface IWB {
   graphApiToken: string;
   phoneNumberId: string;
   phoneNumber: string;
+  publicIdPhoneNumber: string;
 }

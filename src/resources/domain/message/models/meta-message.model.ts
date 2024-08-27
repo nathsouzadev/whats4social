@@ -65,6 +65,22 @@ export interface QuickReplyReceived extends MetaMessage {
   }>;
 }
 
+export interface AudioReceived extends MetaMessage {
+  contacts: Contact[];
+  messages: Array<{
+    from: string;
+    id: string;
+    timestamp: number;
+    type: string;
+    audio: {
+      mime_type: string;
+      sha256: string;
+      id: string;
+      voice: boolean;
+    };
+  }>;
+}
+
 export interface WBPayloadEntry {
   id: string;
   changes: Array<{

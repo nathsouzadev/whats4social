@@ -8,6 +8,7 @@ export default (): IConfig => ({
     graphApiToken: process.env.GRAPH_API_TOKEN,
     phoneNumberId: process.env.GRAPH_PHONE_NUMBER_ID,
     phoneNumber: process.env.WB_PHONE_NUMBER,
+    publicIdPhoneNumber: process.env.WB_PUBLIC_ID_PHONE_NUMBER,
   },
   twitter: {
     accessToken: process.env.TWITTER_ACCESS_TOKEN,
