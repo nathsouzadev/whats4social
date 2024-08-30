@@ -5,5 +5,5 @@ export class GeminiService {
   private logger = new Logger(GeminiService.name);
 
   sendAudio = (audio: Express.Multer.File) =>
-    this.logger.log(`Audio received ${audio}`);
+    this.logger.log(`Audio received ${audio.buffer}`);
 }
