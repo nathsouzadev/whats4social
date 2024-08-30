@@ -24,7 +24,7 @@ export default (): IConfig => ({
   clerk: {
     webhookSecret: process.env.CLERK_WEBHOOK_SECRET,
   },
-  bank: {
-    url: process.env.BANK_URL,
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY,
   },
 });

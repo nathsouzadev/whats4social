@@ -23,6 +23,7 @@
   "dependencies": {
     "@atproto/api": "^0.12.29",
     "@clerk/nextjs": "^5.2.12",
+    "@google/generative-ai": "^0.17.1",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.3",
@@ -31,6 +32,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/terminus": "^10.2.3",
+    "@types/multer": "^1.4.12",
     "axios": "^1.7.3",
     "joi": "^17.13.3",
     "reflect-metadata": "^0.1.13",

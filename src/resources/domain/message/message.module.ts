@@ -6,6 +6,7 @@ import { TwitterService } from '../../client/twitter.service';
 import { BSkyService } from '../../client/bsky.service';
 import { MetaService } from '../../client/meta.service';
 import { AudioService } from '../audio/audio.service';
+import { GeminiService } from '../../../resources/client/gemini.service';
 
 @Module({
   controllers: [MessageController],
@@ -15,7 +16,8 @@ import { AudioService } from '../audio/audio.service';
     TwitterService,
     BSkyService,
     MetaService,
-    AudioService
+    AudioService,
+    GeminiService,
   ],
 })
 export class MessageModule {}

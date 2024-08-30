@@ -3,6 +3,7 @@ import { AudioService } from './audio.service';
 import { MetaService } from '../../../resources/client/meta.service';
 import { ConfigService } from '@nestjs/config';
 import * as nock from 'nock';
+import { GeminiService } from '../../../resources/client/gemini.service';
 
 describe('AudioService', () => {
   let service: AudioService;
@@ -22,6 +23,12 @@ describe('AudioService', () => {
           provide: ConfigService,
           useValue: {
             get: jest.fn().mockReturnValue('token'),
+          },
+        },
+        {
+          provide: GeminiService,
+          useValue: {
+            sendAudio: jest.fn(),
           },
         },
       ],

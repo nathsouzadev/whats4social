@@ -6,6 +6,7 @@ import {
 import { MetaService } from '../../../resources/client/meta.service';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { GeminiService } from '../../../resources/client/gemini.service';
 
 @Injectable()
 export class AudioService {
@@ -16,13 +17,14 @@ export class AudioService {
   constructor(
     private configService: ConfigService,
     private readonly metaService: MetaService,
+    private readonly geminiService: GeminiService,
   ) {}
 
   get = async (audioId: string) => {
     try {
       const { url } = await this.metaService.getAudioUrl(audioId);
 
-      const audio = await axios({
+      const response = await axios({
         method: 'GET',
         url,
         headers: {
@@ -31,7 +33,7 @@ export class AudioService {
         },
       });
 
-      this.logger.log(`Audio fetched ${JSON.stringify(audio.data)}`);
+      this.geminiService.sendAudio(response.data);
 
       return { url };
     } catch (error) {
