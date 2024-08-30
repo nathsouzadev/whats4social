@@ -5003,10 +5003,10 @@ svix-fetch@^3.0.0:
     node-fetch "^2.6.1"
     whatwg-fetch "^3.4.1"
 
-svix@^1.24.0:
-  version "1.24.0"
-  resolved "https://registry.npmjs.org/svix/-/svix-1.24.0.tgz"
-  integrity sha512-TEznBskvdvEJElo/j7BiIZAoaQEWyj/NCmwiV0izlVRf5DnCBFdowkEXERDA3JgUlAYoAJi0S7atWit7nkTMtw==
+svix@^1.31.0:
+  version "1.31.0"
+  resolved "https://registry.yarnpkg.com/svix/-/svix-1.31.0.tgz#d61449311437d563b9d0b7ddabee6ae370c6af70"
+  integrity sha512-sBSFoEWklpLqJP6tZZ8r8IcjYCAJOIiHgFSGBHo/AhmjcMfuE7qTuD5XsAXSgqZxSbFUM6CIHjbdV0QgdN1LtA==
   dependencies:
     "@stablelib/base64" "^1.0.0"
     es6-promise "^4.2.4"
