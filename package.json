@@ -24,7 +24,7 @@
     "@atproto/api": "^0.12.29",
     "@clerk/nextjs": "^5.2.12",
     "@google/generative-ai": "^0.17.1",
-    "@nestjs/axios": "^3.0.2",
+    "@nestjs/axios": "^3.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^9.0.0",
